@@ -28,7 +28,7 @@ Page({
         url: 'https://cjt9xe52.qcloud.la/weapp/addolder',
         data: {
           uid: that.data.uid,
-          name: user
+          user: user
         },
         success: function (res) {
           console.log(res.data);

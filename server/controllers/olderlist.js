@@ -2,14 +2,14 @@ const { mysql } = require('../qcloud')
 
 async function olderlist(ctx, next) {
   var query = ctx.request.query;
-  var res = await mysql('older').select('*').where({ uid: query.uid });
+  var res = await mysql('user').select('id', 'user', 'name', 'mphone').where({ bid: query.uid });
   console.log(res);
   ctx.state.data = res;
 }
 
 async function addolder(ctx, next) {
   var query = ctx.request.query;
-  var res = await mysql('older').update({uid:query.uid}).where({ name: query.name });
+  var res = await mysql('user').update({ bid: query.uid }).where({ user: query.user });
   console.log(res);
   ctx.state.data = res;
 }
@@ -18,9 +18,9 @@ async function deleteolder(ctx, next) {
   var query = ctx.request.query;
   var list = JSON.parse(query.list);
   var res = [];
-  for(let i=0;i<list.length;i++){
+  for (let i = 0; i < list.length; i++) {
     let user = list[i];
-    var result = await mysql('older').update({uid:null}).where({ id: user.id });
+    var result = await mysql('user').update({ bid: null }).where({ id: user.id });
     console.log(result);
     res.push(result);
   }

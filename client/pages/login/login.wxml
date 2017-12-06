@@ -30,4 +30,4 @@
   <button formType="submit">Submit</button>
   <button formType="reset">Reset</button>
 </form>
-<text>formId: {{formId}}</text>
+<text>用于发送模板消息的formId: {{formId}}</text>

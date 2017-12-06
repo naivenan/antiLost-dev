@@ -3,7 +3,6 @@
     "pages/login/login",
     "pages/reg/reg",
     "pages/reg/success",
-    "pages/logs/logs",
     "pages/appindex/index",
     "pages/bindUser/bindUser",
     "pages/deleteUser/deleteUser",
