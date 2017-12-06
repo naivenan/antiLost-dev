@@ -1,0 +1,10 @@
+/* pages/reg/reg.wxss */
+@import '../wxss/weui.wxss';
+
+.weui-label{
+  width: 60px;
+}
+
+button{
+  width: 60%;
+}

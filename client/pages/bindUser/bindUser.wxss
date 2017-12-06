@@ -1,0 +1,19 @@
+/* pages/bindUser/bindUser.wxss */
+@import '../wxss/weui.wxss';
+
+text{
+  text-align: center;
+  margin: 20px 20px;
+  padding: 5px 5px;
+}
+
+input{
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin: 20px 20px;
+  padding: 5px 5px;
+}
+
+button{
+  width: 60%;
+}

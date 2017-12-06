@@ -1,0 +1,7 @@
+<!--pages/user/user.wxml-->
+   <view class="btlist">
+    <!-- <button class='weui-btn mini-btn' type='primary' bindtap='bindUser' size="mini">绑定</button>
+    <button class='weui-btn mini-btn' type='primary' bindtap='location' size="mini">位置</button>
+    <button class='weui-btn mini-btn' type='primary' bindtap='message' size="mini">消息</button> -->
+    <button class='weui-btn mini-btn' type='warn' bindtap='logout' size="mini">退出</button>
+  </view> 

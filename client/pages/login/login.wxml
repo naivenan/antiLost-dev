@@ -1,0 +1,33 @@
+<!--pages/login/login.wxml-->
+<view class="weui-cells__title">登录</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">账号</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" bindinput='userInput' placeholder="请输入账号" />
+    </view>
+  </view>
+  <view class="weui-cell weui-cell_input weui-cell_vcode">
+    <view class="weui-cell__hd">
+      <view class="weui-label">密码</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" type='password' bindinput='pswdInput' placeholder="请输入密码" />
+    </view>
+  </view>
+</view>
+
+<view class="weui-btn-area">
+  <button id="showTooltips" class='weui-btn' type='primary' bindtap='login'>登录</button>
+  <button id="showTooltips" class='weui-btn' type='primary' bindtap='register'>注册</button>
+  <button id="showTooltips" class='weui-btn' type='default' bindtap='reset'>重置</button>
+</view>
+
+<form bindsubmit="formSubmit" report-submit="true">
+  <input name="input" class="input" placeholder="please input here" />
+  <button formType="submit">Submit</button>
+  <button formType="reset">Reset</button>
+</form>
+<text>formId: {{formId}}</text>

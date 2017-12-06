@@ -1,0 +1,47 @@
+/* pages/reg/success.wxss */
+icon{
+  position: relative;
+  display: block;
+  margin: 20px auto;
+  padding-left: 14px;
+  padding-right: 14px;
+  box-sizing: border-box;
+  font-size: 18px;
+  text-align: center;
+  color: #fff;
+  line-height: 2.55555556;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+text{
+  position: relative;
+  display: block;
+  margin: 20px auto;
+  padding-left: 14px;
+  padding-right: 14px;
+  box-sizing: border-box;
+  font-size: 18px;
+  text-align: center;
+  color: #000;
+  line-height: 2.55555556;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+button{
+  width: 60%;
+  background-color: #1AAD19;
+  position: relative;
+  display: block;
+  margin: 20px auto;
+  padding-left: 14px;
+  padding-right: 14px;
+  box-sizing: border-box;
+  font-size: 18px;
+  text-align: center;
+  color: #fff;
+  line-height: 2.55555556;
+  border-radius: 5px;
+  overflow: hidden;
+}

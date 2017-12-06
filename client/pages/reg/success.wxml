@@ -1,0 +1,8 @@
+<!--pages/reg/success.wxml-->
+<view>
+  <icon type='success' size='70'></icon>
+  <view>
+    <text>注册成功,请返回登录页面</text>
+  </view>
+  <button bindtap='login'>登录</button>
+</view>

@@ -1,0 +1,7 @@
+<!--pages/bindUser/bindUser.wxml-->
+<view>
+  <text>输入家属的用户名或者手机号并发送申请，申请通过即可绑定该家属</text>
+  <input class='weui_input' bindinput='userInput' placeholder='用户名或手机号'></input>
+  <button class='weui-btn' type='primary' bindtap='sendApply'>发送申请</button>
+  <button class='weui-btn' type='warn' bindtap='back'>取消申请</button>
+</view>

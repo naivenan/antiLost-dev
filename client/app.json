@@ -1,0 +1,55 @@
+{
+  "pages":[
+    "pages/login/login",
+    "pages/reg/reg",
+    "pages/reg/success",
+    "pages/logs/logs",
+    "pages/appindex/index",
+    "pages/bindUser/bindUser",
+    "pages/deleteUser/deleteUser",
+    "pages/home/home",
+    "pages/location/location",
+    "pages/location-detail/location",
+    "pages/message/message",
+    "pages/user/user",
+    "pages/index/index",
+    "pages/addCgi/addCgi"
+  ],
+  "window":{
+    "backgroundColor":"#F6F6F6",
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "Wafer Quick Start",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "color": "#000000",
+    "selectedColor": "#1296db",
+    "list": [
+      {
+        "pagePath": "pages/appindex/index",
+        "text": "首页",
+        "iconPath": "images/icon/home.png",
+        "selectedIconPath": "images/icon/home_blue.png"
+      },
+      {
+        "pagePath": "pages/home/home",
+        "text": "位置",
+        "iconPath": "images/icon/map-marker.png",
+        "selectedIconPath": "images/icon/map-marker_blue.png"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "text": "消息",
+        "iconPath": "images/icon/message.png",
+        "selectedIconPath": "images/icon/message_blue.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "images/icon/user.png",
+        "selectedIconPath": "images/icon/user_blue.png"
+      }
+    ]
+  }
+}
