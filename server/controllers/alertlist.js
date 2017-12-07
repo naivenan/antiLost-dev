@@ -1,4 +1,5 @@
 const { tunnel } = require('../qcloud')
+const { mysql } = require('../qcloud')
 const debug = require('debug')('koa-weapp-demo')
 
 /**
@@ -18,6 +19,33 @@ const connectedTunnelIds = []
  */
 const $broadcast = (type, content) => {
   tunnel.broadcast(connectedTunnelIds, type, content)
+    .then(result => {
+      const invalidTunnelIds = result.data && result.data.invalidTunnelIds || []
+
+      if (invalidTunnelIds.length) {
+        console.log('检测到无效的信道 IDs =>', invalidTunnelIds)
+
+        // 从 userMap 和 connectedTunnelIds 中将无效的信道记录移除
+        invalidTunnelIds.forEach(tunnelId => {
+          delete userMap[tunnelId]
+
+          const index = connectedTunnelIds.indexOf(tunnelId)
+          if (~index) {
+            connectedTunnelIds.splice(index, 1)
+          }
+        })
+      }
+    })
+}
+
+const $Unicast = (uid, type, content) => {
+  var tunnels = [];
+  connectedTunnelIds.forEach(function (o, i) {
+    if (userMap[o].uid == uid) {
+      tunnels.push(o);
+    }
+  })
+  tunnel.broadcast(tunnels, type, content)
     .then(result => {
       const invalidTunnelIds = result.data && result.data.invalidTunnelIds || []
 
@@ -128,10 +156,11 @@ module.exports = {
   get: async ctx => {
     const data = await tunnel.getTunnelUrl(ctx.req)
     const tunnelInfo = data.tunnel
+    var query = ctx.request.query;
 
-    userMap[tunnelInfo.tunnelId] = data.userinfo
+    userMap[tunnelInfo.tunnelId] = { wx: data.userinfo, uid: query.uid }
 
-    ctx.state.data = tunnelInfo
+    ctx.state.data = {t:tunnelInfo,u:userMap}
   },
 
   // 信道将信息传输过来的时候
@@ -151,6 +180,31 @@ module.exports = {
         onClose(packet.tunnelId)
         break
     }
-  }
+  },
 
+  alert: async ctx => {
+    var res = [];
+    var query = ctx.request.query;
+    var result = await mysql('user').select('*').where({ id: query.uid });
+    res.push({result:result});
+    if (result.length > 0) {
+      query.name = result[0].name;
+      var id = await mysql('alert').insert({
+        uid: query.uid,
+        name: query.name,
+        content: '摔倒了！！！'
+      })
+      res.push({id:id})
+      $Unicast(result[0].bid, 'alert', {
+        uid: query.uid,
+        name: query.name,
+        desc: '摔倒了！！！'
+      });
+      res.push({ message: '警报发送完成'});
+      ctx.state.data = res;
+    } else {
+      res.push({ message: '警报发送失败' })
+      ctx.state.data = res;
+    }
+  }
 }

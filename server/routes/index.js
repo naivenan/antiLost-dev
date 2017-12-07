@@ -40,7 +40,8 @@ router.get('/olderlist',controllers.olderlist.olderlist)
 router.get('/addolder', controllers.olderlist.addolder)
 router.get('/deleteolder', controllers.olderlist.deleteolder)
 
-router.get('/alertlist',controllers.alertlist.get)
-router.post('/alertlist', controllers.alertlist.post)
+router.get('/alertTunnel',controllers.alertlist.get)
+router.post('/alertTunnel', controllers.alertlist.post)
+router.get('/alert', controllers.alertlist.alert)
 
 module.exports = router
