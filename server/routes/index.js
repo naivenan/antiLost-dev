@@ -34,14 +34,18 @@ router.post('/message', controllers.message.post)
 
 router.get('/register', controllers.register)
 router.get('/userlogin',controllers.userlogin)
+router.get('/wxlogin', controllers.wxlogin)
 
 router.get('/olderlist',controllers.olderlist.olderlist)
 
 router.get('/addolder', controllers.olderlist.addolder)
 router.get('/deleteolder', controllers.olderlist.deleteolder)
 
+router.get('/alertlist', controllers.alertlist.alertlist)
 router.get('/alertTunnel',controllers.alertlist.get)
 router.post('/alertTunnel', controllers.alertlist.post)
 router.get('/alert', controllers.alertlist.alert)
+router.get('/cancelAlert', controllers.alertlist.cancel)
+
 
 module.exports = router

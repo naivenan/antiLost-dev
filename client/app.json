@@ -1,8 +1,7 @@
 {
   "pages":[
+    
     "pages/login/login",
-    "pages/index/index",
-
     "pages/reg/reg",
     "pages/reg/success",
     "pages/appindex/index",
@@ -13,7 +12,11 @@
     "pages/location-detail/location",
     "pages/message/message",
     "pages/user/user",
+    "pages/user/edit/image",
+    "pages/user/edit/name",
+    "pages/user/edit/wx",
 
+    "pages/index/index",
     "pages/addCgi/addCgi"
   ],
   "window":{

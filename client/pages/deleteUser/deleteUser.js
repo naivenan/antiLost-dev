@@ -1,5 +1,5 @@
 // pages/deleteUser/deleteUser.js
-const app = getApp();
+var app = getApp();
 
 Page({
 
@@ -52,9 +52,9 @@ Page({
             },
             success: function (res) {
               console.log(res.data);
+              that.getOlderList();
             }
           })
-          that.getOlderList();
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
@@ -74,7 +74,6 @@ Page({
         console.log(res.data);
         var list = res.data.data;
         app.globalData.olderList = list;
-        wx.setStorageSync('olderlist', res.data.data);
         for (let i = 0; i < list.length; i++) {
           list[i].value = i;
           list[i].checked = false;
@@ -95,20 +94,14 @@ Page({
 
   refresh: function () {
     var that = this;
-    wx.getStorage({
-      key: 'olderlist',
-      success: function(res) {
-        var list = res.data;
-        for (let i = 0; i < list.length; i++) {
-          list[i].value = i;
-          list[i].checked = false;
-        }
-        that.setData({
-          olderList: list
-        })
-      },
+    var list = app.globalData.olderList;
+    for (let i = 0; i < list.length; i++) {
+      list[i].value = i;
+      list[i].checked = false;
+    }
+    that.setData({
+      olderList: list
     })
-    
   },
 
   /**
@@ -130,16 +123,10 @@ Page({
    */
   onShow: function () {
     var that = this;
-    wx.getStorage({
-      key: 'userinfo',
-      success: function (res) {
-        that.setData({
-          uid: res.data.id
-        })
-        that.refresh();
-      },
+    that.setData({
+      uid:app.globalData.userinfo.id
     })
-
+    that.refresh();
   },
 
   /**

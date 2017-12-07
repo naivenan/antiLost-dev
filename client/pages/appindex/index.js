@@ -4,15 +4,13 @@ var app = getApp();
 var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
 var util = require('../../utils/util.js')
+var tunnel = 'off'
 
 Page({
   data: {
     user: null,
     olderList: [],
-    alertList: [
-      { id: 1, pic: '../../images/icon/user.png', name: '老大', desc: '摔倒了！' },
-      { id: 2, pic: '../../images/icon/user.png', name: '老二', desc: '摔倒了！' },
-    ],
+    alertList: [],
   },
   //事件处理函数
   bindUser: function () {
@@ -29,9 +27,17 @@ Page({
     this.getOlderList();
     this.getAlertList();
   },
+  close: function() {
+    this.closeTunnel();
+  },
 
   onLoad: function () {
     console.log('pages/appindex/index onLoad...');
+    console.log('globalData.userinfo: ' + app.globalData.userinfo);
+    this.setData({
+      user: app.globalData.userinfo
+    })
+    tunnel = 'on';
     this.openTunnel();
   },
 
@@ -44,25 +50,74 @@ Page({
       },
       success: function (res) {
         console.log(res.data);
-        var list = res.data.data;
-        app.globalData.olderList = list;
-        wx.setStorageSync('olderlist', res.data.data);
-        that.setData({
-          olderList: list
-        })
+        if(res.data.code == 0){
+          var list = res.data.data;
+          app.globalData.olderList = list;
+          that.setData({
+            olderList: list
+          })
+        }else{
+          util.showModel('获取绑定信息失败', '请刷新')
+        }
       }
     })
-    
+
   },
 
   getAlertList: function (param) {
+    var that = this;
+    wx.request({
+      url: 'https://cjt9xe52.qcloud.la/weapp/alertlist',
+      data: {
+        bid: this.data.user.id
+      },
+      success: function (res) {
+        console.log(res.data);
+        if (res.data.code == 0) {
+          var list = res.data.data;
+          app.globalData.alertList = list;
+          that.setData({
+            alertList: list
+          })
+        } else {
+          util.showModel('获取警报提醒失败', '请刷新')
+        }
+      }
+    })
+  },
 
+  cancelAlert: function (e) {
+    var that = this;
+    console.log('cancelAlert: ' + e.currentTarget.dataset.id);
+    var cancelId = e.currentTarget.dataset.id;
+    wx.request({
+      url: 'https://cjt9xe52.qcloud.la/weapp/cancelAlert',
+      data: {
+        id: cancelId
+      },
+      success: function (res) {
+        console.log(res.data);
+        if (res.data.code == 0) {
+          var list = that.data.alertList;
+          for (let i = 0; i < list.length; i++) {
+            if (list[i].id == cancelId) {
+              list.splice(i, 1);
+            }
+          }
+          that.setData({
+            alertList: list
+          })
+        } else {
+          util.showModel('取消失败', '请重试')
+        }
+      }
+    })
   },
 
   openTunnel: function () {
     util.showBusy('信道连接中...')
     // 创建信道，需要给定后台服务地址
-    var tunnel = this.tunnel = new qcloud.Tunnel(config.service.alertTunnelUrl)
+    var tunnel = this.tunnel = new qcloud.Tunnel(config.service.alertTunnelUrl + '?uid=' + this.data.user.id)
 
     // 监听信道内置消息，包括 connect/close/reconnecting/reconnect/error
     tunnel.on('connect', () => {
@@ -88,17 +143,22 @@ Page({
     })
 
     tunnel.on('error', error => {
-      util.showModel('警报信道发生错误', error)
+      util.showModel('警报信道发生错误', 'error')
       console.error('警报信道发生错误：', error)
     })
 
     // 监听自定义消息（服务器进行推送）
     tunnel.on('alert', alert => {
       util.showModel('信道消息', alert)
-      console.log('收到说话消息：', alert)
+      console.log('收到警报提醒：', alert)
       wx.setStorage({
         key: 'alert',
         data: alert,
+      })
+      var list = this.data.alertList;
+      list.push(alert);
+      this.setData({
+        alertList: list
       })
     })
 
@@ -129,6 +189,7 @@ Page({
     if (this.tunnel) {
       this.tunnel.close();
     }
+    tunnel = 'off';
     util.showBusy('警报信道关闭中...')
     this.setData({ tunnelStatus: 'closed' })
   },
@@ -145,10 +206,10 @@ Page({
    */
   onShow: function () {
     console.log('onShow...');
-    console.log('globalData.userinfo: ' + app.globalData.userinfo);
-    this.setData({
-      user: app.globalData.userinfo
-    })
+    if (tunnel != 'on') {
+      this.openTunnel();
+      tunnel = 'on';
+    }
     this.getOlderList();
     this.getAlertList();
   },

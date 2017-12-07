@@ -160,7 +160,7 @@ module.exports = {
 
     userMap[tunnelInfo.tunnelId] = { wx: data.userinfo, uid: query.uid }
 
-    ctx.state.data = {t:tunnelInfo,u:userMap}
+    ctx.state.data = tunnelInfo
   },
 
   // 信道将信息传输过来的时候
@@ -182,29 +182,44 @@ module.exports = {
     }
   },
 
+  alertlist: async ctx => {
+    var query = ctx.request.query;
+    var res = await mysql('alert').select('id','uid','name','content').where({ bid: query.bid, state: 1 });
+    ctx.state.data = res;
+  },
+
   alert: async ctx => {
     var res = [];
     var query = ctx.request.query;
     var result = await mysql('user').select('*').where({ id: query.uid });
-    res.push({result:result});
+    res.push({ result: result });
     if (result.length > 0) {
       query.name = result[0].name;
       var id = await mysql('alert').insert({
+        bid: result[0].bid,
+        uid: query.uid,
+        name: query.name,
+        content: '摔倒了！！！',
+        state: 1
+      })
+      res.push({ id: id[0] })
+      $Unicast(result[0].bid, 'alert', {
+        id: id[0],
         uid: query.uid,
         name: query.name,
         content: '摔倒了！！！'
-      })
-      res.push({id:id})
-      $Unicast(result[0].bid, 'alert', {
-        uid: query.uid,
-        name: query.name,
-        desc: '摔倒了！！！'
       });
-      res.push({ message: '警报发送完成'});
+      res.push({ message: '警报发送完成' });
       ctx.state.data = res;
     } else {
       res.push({ message: '警报发送失败' })
       ctx.state.data = res;
     }
+  },
+
+  cancel: async ctx => {
+    var query = ctx.request.query;
+    var res = await mysql('alert').update({ state: 0 }).where({ id: query.id });
+    ctx.state.data = res;
   }
 }

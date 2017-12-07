@@ -6,7 +6,7 @@
       <view class="weui-label">账号</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" bindinput='userInput' placeholder="请输入账号" />
+      <input class="weui-input" bindinput='userInput' placeholder="请输入账号"></input>
     </view>
   </view>
   <view class="weui-cell weui-cell_input weui-cell_vcode">
@@ -14,15 +14,15 @@
       <view class="weui-label">密码</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" type='password' bindinput='pswdInput' placeholder="请输入密码" />
+      <input class="weui-input" type='password' bindinput='pswdInput' placeholder="请输入密码"></input>
     </view>
   </view>
 </view>
 
 <view class="weui-btn-area">
-  <button id="showTooltips" class='weui-btn' type='primary' bindtap='login'>登录</button>
-  <button id="showTooltips" class='weui-btn' type='primary' bindtap='register'>注册</button>
-  <button id="showTooltips" class='weui-btn' type='default' bindtap='reset'>重置</button>
+  <button id="showTooltips" class='weui-btn' type='primary' bindtap='wxlogin'>使用微信登录</button>
+  <button id="showTooltips" class='weui-btn' type='default' bindtap='login'>登录</button>
+  <button id="showTooltips" class='weui-btn' type='default' bindtap='register'>注册</button>
 </view>
 
 <form bindsubmit="formSubmit" report-submit="true">

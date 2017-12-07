@@ -1,0 +1,11 @@
+<!--pages/user/edit/name.wxml-->
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <input class="weui-textarea" value='{{inputValue}}' placeholder='请输入您的昵称' maxlength='10' focus='true' confirm-type='done' bindinput='input' bindconfirm='back'></input>
+      <view class="weui-textarea-counter">{{inputValue.length}}/10</view>
+    </view>
+  </view>
+</view>
+
+<button class='weui-btn' type='primary' bindtap='done'>完成</button>

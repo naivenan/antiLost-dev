@@ -12,13 +12,6 @@ Page({
     },
 
     onLoad: function () {
-      wx.request({
-        url: 'https://cjt9xe52.qcloud.la/weapp/olderlist',
-        success: function(res){
-          console.log(res.data);
-          wx.setStorageSync('res.data', res.data);
-        }
-      })
     },
 
     // 用户登录示例

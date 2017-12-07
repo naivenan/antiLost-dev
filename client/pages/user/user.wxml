@@ -1,7 +1,26 @@
 <!--pages/user/user.wxml-->
-   <view class="btlist">
-    <!-- <button class='weui-btn mini-btn' type='primary' bindtap='bindUser' size="mini">绑定</button>
-    <button class='weui-btn mini-btn' type='primary' bindtap='location' size="mini">位置</button>
-    <button class='weui-btn mini-btn' type='primary' bindtap='message' size="mini">消息</button> -->
-    <button class='weui-btn mini-btn' type='warn' bindtap='logout' size="mini">退出</button>
-  </view> 
+<view class="weui-cells__title">个人资料</view>
+<view class="weui-cells weui-cells_after-title">
+  <navigator url="edit/image" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__bd">头像</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{user.image}}</view>
+  </navigator>
+  <navigator url="edit/name?name={{user.name}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__bd">昵称</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{user.name}}</view>
+  </navigator>
+  <navigator url="edit/wx" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__bd">手机</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{user.mphone}}</view>
+  </navigator>
+  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__bd">出生日期</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{user.birth}}</view>
+  </navigator>
+  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__bd">性别</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{user.sex}}</view>
+  </navigator>
+</view>
+
+<button class='weui-btn mini-btn' type='warn' bindtap='logout' size="mini">退出</button>

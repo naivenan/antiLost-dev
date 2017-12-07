@@ -48,9 +48,6 @@
   text-align: center;
 }
 
-.btlist{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
+.weui-btn{
+  margin-top: 0
 }

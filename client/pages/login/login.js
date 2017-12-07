@@ -1,6 +1,8 @@
 // pages/login/login.js
 var app = getApp();
-var util = require('../../utils/util.js');
+var qcloud = require('../../vendor/wafer2-client-sdk/index')
+var config = require('../../config')
+var util = require('../../utils/util.js')
 
 Page({
 
@@ -8,20 +10,56 @@ Page({
    * 页面的初始数据
    */
   data: {
-    user: null,
-    pswd: null,
+    user: 'naive',
+    pswd: '123',
     formId: null,
-  },
-  reset: function () {
-    app.globalData.olderList = [
-      { name: '老大' }, { name: '老二' }, { name: '老三' }, { name: '老四' }, { name: '老五' },
-      { name: '小六' }, { name: '小七' },
-    ];
   },
   register: function () {
     wx.navigateTo({
       url: '../reg/reg'
     })
+  },
+  wxlogin: function() {
+    util.showBusy('请求中...')
+    var that = this,userinfo = null;
+    var options = {
+      url: config.service.requestUrl,
+      login: true,
+      success(result) {
+        util.showSuccess('请求成功完成')
+        console.log('request success', result)
+        that.setData({
+          requestResult: JSON.stringify(result.data)
+        })
+        wx.request({
+          url: 'https://cjt9xe52.qcloud.la/weapp/wxlogin',
+          data: {
+            user: result.data.data.openId,
+            name: result.data.data.nickName
+          },
+          success: function (res) {
+            var data = res.data.data;
+            console.log(data);
+            if (data.state == 'success') {
+              userinfo = data.userinfo
+              app.globalData.userinfo = userinfo;
+              wx.switchTab({
+                url: '../appindex/index',
+              });
+            } else {
+              util.showModel('登录失败', data.errMessage);
+            }
+          }
+        })
+
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    }
+    // 使用 qcloud.request 带登录态登录，可以获取到openId作为用户名
+    qcloud.request(options);
   },
   login: function (e) {
     console.log('login...');
@@ -43,7 +81,6 @@ Page({
         console.log(data);
         if(data.state == 'success'){
           app.globalData.userinfo = data.userinfo;
-          wx.setStorageSync('userinfo', data.userinfo);
           wx.switchTab({
             url: '../appindex/index',
           });
@@ -95,7 +132,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    wx.clearStorage();
   },
 
   /**
