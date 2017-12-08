@@ -23,7 +23,9 @@ var config = {
         // 上传图片接口
         uploadUrl: `${host}/weapp/upload`,
 
-        alertTunnelUrl: `${host}/weapp/alertTunnel`
+        alertTunnelUrl: `${host}/weapp/alertTunnel`,
+
+        userUpdate: `${host}/weapp/userUpdate`
     }
 };
 

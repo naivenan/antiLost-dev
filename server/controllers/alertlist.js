@@ -184,7 +184,7 @@ module.exports = {
 
   alertlist: async ctx => {
     var query = ctx.request.query;
-    var res = await mysql('alert').select('id','uid','name','content').where({ bid: query.bid, state: 1 });
+    var res = await mysql('alert').select('*').where({ bid: query.bid, state: 1 });
     ctx.state.data = res;
   },
 
@@ -193,21 +193,23 @@ module.exports = {
     var query = ctx.request.query;
     var result = await mysql('user').select('*').where({ id: query.uid });
     res.push({ result: result });
+    var user = result[0];
     if (result.length > 0) {
-      query.name = result[0].name;
       var id = await mysql('alert').insert({
-        bid: result[0].bid,
-        uid: query.uid,
-        name: query.name,
+        bid: user.bid,
+        uid: user.uid,
+        name: user.name,
         content: '摔倒了！！！',
+        imgUrl: user.imgUrl,
         state: 1
       })
       res.push({ id: id[0] })
       $Unicast(result[0].bid, 'alert', {
         id: id[0],
-        uid: query.uid,
-        name: query.name,
-        content: '摔倒了！！！'
+        uid: user.uid,
+        name: user.name,
+        content: '摔倒了！！！',
+        imgUrl: user.imgUrl
       });
       res.push({ message: '警报发送完成' });
       ctx.state.data = res;

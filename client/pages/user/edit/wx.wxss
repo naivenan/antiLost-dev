@@ -1,1 +1,6 @@
 /* pages/user/edit/wx.wxss */
+@import '../../wxss/weui.wxss';
+
+button{
+  width: 60%;
+}

@@ -9,7 +9,9 @@ module.exports = async ctx => {
     ids = await mysql('user').insert({
       type: 'family',
       user: query.user,
-      name: query.name
+      name: query.name,
+      sex: query.sex,
+      imgUrl: query.imgUrl
     });
     results = await mysql('user').select('*').where({ id: ids[0] });
   }
@@ -19,7 +21,7 @@ module.exports = async ctx => {
     ctx.state.data = {
       state: 'success',
       errMessage: null,
-      userinfo: { id: res.id, user: res.user, name: res.name, mphone: res.mphone }
+      userinfo: res
     };
   } else {
     ctx.state.data = { state: 'failure', errMessage: '登录失败,请重新登录' };

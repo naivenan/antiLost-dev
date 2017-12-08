@@ -29,7 +29,7 @@
 }
 
 .weui-panel__hd {
-  padding-left: 10px 10px 10px;
+  padding: 10px 5px 10px 0px;
   color: red;
   font-size: 15px;
   position: relative;
@@ -49,5 +49,28 @@
 }
 
 .weui-btn{
-  margin-top: 0
+  margin-top: 0;
+  overflow: visible;
+}
+
+.weui-grid__icon{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+
+.weui-media-box{
+  padding: 5px;
+}
+
+.weui-panel__hd{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center; 
+}
+
+.weui-btn{
+  margin-left: 5px;
+  margin-right: 5px;
 }

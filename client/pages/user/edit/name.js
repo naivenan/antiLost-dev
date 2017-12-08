@@ -1,4 +1,6 @@
 // pages/user/edit/name.js
+var app = getApp();
+
 Page({
 
   /**
@@ -13,29 +15,17 @@ Page({
     })
   },
   back: function(){
-    var that = this;
-    var pages = getCurrentPages();
-    console.log('pages: ' + pages);
-    var parent = pages[0];
-    var userinfo = parent.data.userinfo;
-    userinfo.name = that.data.inputValue;
-    parent.setData({
-      userinfo: userinfo
-    })
-    wx.navigateBack({
-      delta: 1
-    })
+    this.done();
   },
   done: function () {
     var that = this;
     var pages = getCurrentPages();
     console.log('pages: ' + pages);
     var parent = pages[0];
-    var userinfo = parent.data.userinfo;
-    userinfo.name = that.data.inputValue;
-    parent.setData({
-      userinfo: userinfo
-    })
+    var user = parent.data.user;
+    user.name = that.data.inputValue;
+    app.globalData.userinfo = user;
+    parent.update(user);
     wx.navigateBack({
       delta: 1
     })

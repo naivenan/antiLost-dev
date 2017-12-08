@@ -1,18 +1,42 @@
 // pages/user/edit/wx.js
+var app = getApp();
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    inputValue: ''
   },
-
+  input: function (e) {
+    this.setData({
+      inputValue: e.detail.value
+    })
+  },
+  back: function () {
+    this.done();
+  },
+  done: function () {
+    var that = this;
+    var pages = getCurrentPages();
+    console.log('pages: ' + pages);
+    var parent = pages[0];
+    var user = parent.data.user;
+    user.mphone = that.data.inputValue;
+    app.globalData.userinfo = user;
+    parent.update(user);
+    wx.navigateBack({
+      delta: 1
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    this.setData({
+      inputValue: options.mphone
+    })
   },
 
   /**

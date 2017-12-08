@@ -12,7 +12,6 @@
     "pages/location-detail/location",
     "pages/message/message",
     "pages/user/user",
-    "pages/user/edit/image",
     "pages/user/edit/name",
     "pages/user/edit/wx",
 

@@ -1,5 +1,7 @@
 // pages/user/user.js
 var app = getApp();
+var config = require('../../config');
+var util = require('../../utils/util');
 
 Page({
 
@@ -7,7 +9,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    user: null
+    user: null,
+    today: util.formatTime(new Date()).substring(0, 11).replace(/\//g, '-'),
+    sexArray: ['男','女']
   },
 
   logout: function () {
@@ -30,11 +34,94 @@ Page({
     })
   },
 
+  bindDateChange: function(e){
+    var user = this.data.user;
+    user.birthday = e.detail.value;
+    app.globalData.userinfo = user;
+    this.setData({
+      user: user
+    })
+    this.update(user);
+  },
+
+  bindSexChange: function (e) {
+    var user = this.data.user;
+    user.sex = this.data.sexArray[e.detail.value];
+    app.globalData.userinfo = user;
+    this.setData({
+      user: user
+    })
+    this.update(user);
+  },
+
+  doUpload: function () {
+    var that = this
+
+    // 选择图片
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        util.showBusy('正在上传')
+        var filePath = res.tempFilePaths[0]
+
+        // 上传图片
+        wx.uploadFile({
+          url: config.service.uploadUrl,
+          filePath: filePath,
+          name: 'file',
+
+          success: function (res) {
+            util.showSuccess('上传图片成功')
+            console.log(res)
+            res = JSON.parse(res.data)
+            console.log(res)
+            var user = that.data.user;
+            user.imgUrl = res.data.imgUrl;
+            app.globalData.userinfo = user;
+            that.setData({
+              user: user 
+            })
+            that.update(user);
+          },
+
+          fail: function (e) {
+            util.showModel('上传图片失败')
+          }
+        })
+
+      },
+      fail: function (e) {
+        console.error(e)
+      }
+    })
+  },
+
+  update: function(user){
+    wx.request({
+      url: config.service.userUpdate,
+      data: {
+        user: user
+      },
+      success: res => {
+        if(res.data.code != 0){
+          console.error(res)
+        }
+      },
+      fail: res => {
+        util.showModel('设置失败','请重新设置');
+      }
+    })
+  },
+
+
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
   },
 
   /**

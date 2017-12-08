@@ -1,2 +1,11 @@
 <!--pages/user/edit/wx.wxml-->
-<text>pages/user/edit/wx.wxml</text>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <input class="weui-textarea" value='{{inputValue}}' placeholder='请输入您的手机' maxlength='11' focus='true' bindinput='input' bindconfirm='back'></input>
+      <view class="weui-textarea-counter">{{inputValue.length}}/11</view>
+    </view>
+  </view>
+</view>
+
+<button class='weui-btn' type='primary' bindtap='done'>完成</button>

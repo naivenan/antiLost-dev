@@ -2,7 +2,7 @@ const { mysql } = require('../qcloud')
 
 async function olderlist(ctx, next) {
   var query = ctx.request.query;
-  var res = await mysql('user').select('id', 'user', 'name', 'mphone').where({ bid: query.uid });
+  var res = await mysql('user').select('*').where({ bid: query.uid });
   console.log(res);
   ctx.state.data = res;
 }

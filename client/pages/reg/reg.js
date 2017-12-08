@@ -60,7 +60,7 @@ Page({
             });
           }else{
             util.showModel('注册失败', res.data.data.errMessage);
-            console.log('登录失败');
+            console.log('注册失败');
           }
         }
       })

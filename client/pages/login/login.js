@@ -28,14 +28,13 @@ Page({
       success(result) {
         util.showSuccess('请求成功完成')
         console.log('request success', result)
-        that.setData({
-          requestResult: JSON.stringify(result.data)
-        })
         wx.request({
           url: 'https://cjt9xe52.qcloud.la/weapp/wxlogin',
           data: {
             user: result.data.data.openId,
-            name: result.data.data.nickName
+            name: result.data.data.nickName,
+            sex: result.data.data.gender==1?'男':'女',
+            imgUrl: result.data.data.avatarUrl
           },
           success: function (res) {
             var data = res.data.data;

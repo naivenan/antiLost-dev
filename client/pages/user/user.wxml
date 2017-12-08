@@ -1,26 +1,48 @@
 <!--pages/user/user.wxml-->
 <view class="weui-cells__title">个人资料</view>
 <view class="weui-cells weui-cells_after-title">
-  <navigator url="edit/image" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap='doUpload'>
     <view class="weui-cell__bd">头像</view>
-    <view class="weui-cell__ft weui-cell__ft_in-access">{{user.image}}</view>
-  </navigator>
+    <view class="weui-cell__ft weui-cell__ft_in-access">
+      <image class="userinfo-avatar" src="{{user.imgUrl ? user.imgUrl : './user-unlogin.png'}}" background-size="cover"></image>
+    </view>
+  </view>
   <navigator url="edit/name?name={{user.name}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
     <view class="weui-cell__bd">昵称</view>
     <view class="weui-cell__ft weui-cell__ft_in-access">{{user.name}}</view>
   </navigator>
-  <navigator url="edit/wx" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+  <navigator url="edit/wx?mphone={{user.mphone}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
     <view class="weui-cell__bd">手机</view>
-    <view class="weui-cell__ft weui-cell__ft_in-access">{{user.mphone}}</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{user.mphone?user.mphone:'未设置'}}</view>
   </navigator>
-  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
     <view class="weui-cell__bd">出生日期</view>
-    <view class="weui-cell__ft weui-cell__ft_in-access">{{user.birth}}</view>
-  </navigator>
-  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__ft weui-cell__ft_in-access">
+      <picker mode="date" value="{{date}}" start="1900-01-01" end="{{today}}" bindchange="bindDateChange">
+        <view class="picker" wx:if='{{user.birthday}}'>
+          {{user.birthday}}
+        </view>
+        <view class="picker" wx:else>
+          未设置
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
     <view class="weui-cell__bd">性别</view>
-    <view class="weui-cell__ft weui-cell__ft_in-access">{{user.sex}}</view>
-  </navigator>
+    <view class="weui-cell__ft weui-cell__ft_in-access">
+      <picker bindchange="bindSexChange" range="{{sexArray}}">
+        <view class="picker" wx:if='{{user.sex}}'>
+          {{user.sex}}
+        </view>
+        <view class="picker" wx:else>
+          未设置
+        </view>
+      </picker>
+    </view>
+  </view>
 </view>
 
-<button class='weui-btn mini-btn' type='warn' bindtap='logout' size="mini">退出</button>
+<view class="weui-btn-area">
+  <button id="showTooltips" class='weui-btn' type='warn' bindtap='logout'>退出</button>
+</view>

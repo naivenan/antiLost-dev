@@ -25,9 +25,9 @@
   <button id="showTooltips" class='weui-btn' type='default' bindtap='register'>注册</button>
 </view>
 
-<form bindsubmit="formSubmit" report-submit="true">
+<!-- <form bindsubmit="formSubmit" report-submit="true">
   <input name="input" class="input" placeholder="please input here" />
   <button formType="submit">Submit</button>
   <button formType="reset">Reset</button>
 </form>
-<text>用于发送模板消息的formId: {{formId}}</text>
+<text>用于发送模板消息的formId: {{formId}}</text> -->

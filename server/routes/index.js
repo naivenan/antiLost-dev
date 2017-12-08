@@ -32,8 +32,9 @@ router.get('/message', controllers.message.get)
 // POST 用来处理微信转发过来的客服消息
 router.post('/message', controllers.message.post)
 
-router.get('/register', controllers.register)
-router.get('/userlogin',controllers.userlogin)
+router.get('/register', controllers.users.register)
+router.get('/userlogin',controllers.users.login)
+router.get('/userUpdate', controllers.users.update)
 router.get('/wxlogin', controllers.wxlogin)
 
 router.get('/olderlist',controllers.olderlist.olderlist)
