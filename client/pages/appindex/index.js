@@ -27,7 +27,7 @@ Page({
     this.getOlderList();
     this.getAlertList();
   },
-  close: function() {
+  close: function () {
     this.closeTunnel();
   },
 
@@ -50,13 +50,13 @@ Page({
       },
       success: function (res) {
         console.log(res.data);
-        if(res.data.code == 0){
+        if (res.data.code == 0) {
           var list = res.data.data;
           app.globalData.olderList = list;
           that.setData({
             olderList: list
           })
-        }else{
+        } else {
           util.showModel('获取绑定信息失败', '请刷新')
         }
       }
@@ -226,7 +226,10 @@ Page({
    */
   onUnload: function () {
     console.log('onUnload...');
-    this.closeTunnel();
+    if (tunnel == 'on') {
+      this.closeTunnel();
+      tunnel = 'off';
+    }
   },
 
   /**

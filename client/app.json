@@ -10,7 +10,9 @@
     "pages/home/home",
     "pages/location/location",
     "pages/location-detail/location",
-    "pages/message/message",
+    "pages/service/service",
+    "pages/service/search/search",
+    "pages/service/location/location",
     "pages/user/user",
     "pages/user/edit/name",
     "pages/user/edit/wx",
@@ -22,7 +24,7 @@
     "backgroundColor":"#F6F6F6",
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "Wafer Quick Start",
+    "navigationBarTitleText": "防走失小程序",
     "navigationBarTextStyle":"black"
   },
   "tabBar": {
@@ -42,10 +44,10 @@
         "selectedIconPath": "images/icon/map-marker_blue.png"
       },
       {
-        "pagePath": "pages/message/message",
-        "text": "消息",
-        "iconPath": "images/icon/message.png",
-        "selectedIconPath": "images/icon/message_blue.png"
+        "pagePath": "pages/service/service",
+        "text": "服务",
+        "iconPath": "images/icon/service.png",
+        "selectedIconPath": "images/icon/service_blue.png"
       },
       {
         "pagePath": "pages/user/user",

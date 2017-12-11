@@ -1,0 +1,24 @@
+<!--pages/service/service.wxml-->
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-search-bar">
+      <view class="weui-search-bar__form">
+         <view class="weui-search-bar__box">
+          <input class="weui-search-bar__input" />
+        </view> 
+        <label class="weui-search-bar__label" bindtap="search">
+          <icon class="weui-icon-search" type="search" size="14"></icon>
+          <view class="weui-search-bar__text">搜索</view>
+        </label>
+      </view>
+    </view>
+    <view class="weui-grids">
+      <block wx:for="{{services}}" wx:key="title">
+        <navigator url="./search/search?input={{item.title}}" class="weui-grid" hover-class="weui-grid_active">
+          <image class="weui-grid__icon" src="{{item.img}}" />
+          <view class="weui-grid__label">{{item.title}}</view>
+        </navigator>
+      </block>
+    </view>
+  </view>
+</view>
