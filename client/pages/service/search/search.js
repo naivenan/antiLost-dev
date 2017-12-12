@@ -1,6 +1,7 @@
 // pages/service/search/search.js
 var QQMapWX = require('../../../resources/map/qqmap-wx-jssdk.js');
 var qqmapsdk;
+var app = getApp();
 
 Page({
 
@@ -154,6 +155,8 @@ Page({
       success: function (res) {
         var latitude = res.latitude
         var longitude = res.longitude
+        app.globalData.latitude = latitude;
+        app.globalData.longitude = longitude;
         that.setData({
           latitude: res.latitude,
           longitude: res.longitude

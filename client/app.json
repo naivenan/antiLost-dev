@@ -15,7 +15,7 @@
     "pages/service/location/location",
     "pages/user/user",
     "pages/user/edit/name",
-    "pages/user/edit/wx",
+    "pages/user/edit/mphone",
 
     "pages/index/index",
     "pages/addCgi/addCgi"

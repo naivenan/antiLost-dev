@@ -11,7 +11,7 @@
     <view class="weui-cell__bd">昵称</view>
     <view class="weui-cell__ft weui-cell__ft_in-access">{{user.name}}</view>
   </navigator>
-  <navigator url="edit/wx?mphone={{user.mphone}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+  <navigator url="edit/mphone?mphone={{user.mphone}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
     <view class="weui-cell__bd">手机</view>
     <view class="weui-cell__ft weui-cell__ft_in-access">{{user.mphone?user.mphone:'未设置'}}</view>
   </navigator>

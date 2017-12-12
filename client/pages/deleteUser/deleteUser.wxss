@@ -1,2 +1,6 @@
 /* pages/deleteUser/deleteUser.wxss */
 @import '../wxss/weui.wxss';
+
+button{
+  width: 60%;
+}

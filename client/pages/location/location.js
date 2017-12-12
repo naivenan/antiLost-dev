@@ -94,56 +94,51 @@ Page({
   //进行路径规划
   doWalkingRoute: function (destination) {
     var that = this;
+    //设置详细路径需要的值
+    that.setData({
+      origin: that.data.origin,
+      destination: destination
+    });
     //调用高德地图路径规划
-    wx.getLocation({
-      type: 'gcj02', //适用于微信的位置精度
-      success: function (res) {
-        //设置详细路径需要的值
-        that.setData({
-          origin: res.longitude + "," + res.latitude,
-          destination: destination
-        });
-        //路径规划
-        amapInstance.getWalkingRoute({
-          origin: res.longitude + "," + res.latitude,
-          destination: destination,
-          success: function (data) {
-            var points = [];
-            if (data.paths && data.paths[0] && data.paths[0].steps) {
-              var steps = data.paths[0].steps;
-              for (var i = 0; i < steps.length; i++) {
-                var poLen = steps[i].polyline.split(';');
-                for (var j = 0; j < poLen.length; j++) {
-                  points.push({
-                    longitude: parseFloat(poLen[j].split(',')[0]),
-                    latitude: parseFloat(poLen[j].split(',')[1])
-                  })
-                }
-              }
+    amapInstance.getWalkingRoute({
+      origin: res.longitude + "," + res.latitude,
+      destination: destination,
+      success: function (data) {
+        var points = [];
+        if (data.paths && data.paths[0] && data.paths[0].steps) {
+          var steps = data.paths[0].steps;
+          for (var i = 0; i < steps.length; i++) {
+            var poLen = steps[i].polyline.split(';');
+            for (var j = 0; j < poLen.length; j++) {
+              points.push({
+                longitude: parseFloat(poLen[j].split(',')[0]),
+                latitude: parseFloat(poLen[j].split(',')[1])
+              })
             }
-            that.setData({
-              polyline: [{
-                points: points,
-                color: "#0091ff",
-                width: 6
-              }]
-            });
-            if (data.paths[0] && data.paths[0].distance) {
-              that.setData({
-                distance: data.paths[0].distance + ' 米'
-              });
-            }
-            if (data.paths[0] && data.paths[0].duration) {
-              that.setData({
-                cost: parseInt(data.paths[0].duration / 60) + ' 分钟'
-              });
-            }
-          },
-          fail: function (info) {
           }
-        })
+        }
+        that.setData({
+          polyline: [{
+            points: points,
+            color: "#0091ff",
+            width: 6
+          }]
+        });
+        if (data.paths[0] && data.paths[0].distance) {
+          that.setData({
+            distance: data.paths[0].distance + ' 米'
+          });
+        }
+        if (data.paths[0] && data.paths[0].duration) {
+          that.setData({
+            cost: parseInt(data.paths[0].duration / 60) + ' 分钟'
+          });
+        }
+      },
+      fail: function (info) {
       }
     })
+
   },
   //根据marker的id获取详情信息
   getMarkerById: function (id) {

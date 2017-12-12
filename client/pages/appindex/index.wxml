@@ -11,7 +11,7 @@
   <view wx:if='{{olderList.length>0}}' class='olders'>
     <view class="weui-grids">
       <block wx:for="{{olderList}}" wx:key="id">
-        <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+        <navigator open-type='switchTab' url="../home/home" class="weui-grid" hover-class="weui-grid_active">
           <image class="weui-grid__icon" src="{{item.imgUrl}}" background-size="cover" />
           <view class="weui-grid__label">{{item.name}}</view>
         </navigator>
@@ -24,20 +24,19 @@
 
     <view class="weui-panel__hd">
       <text class='title'>警报提醒</text>
-      <button class='weui-btn mini-btn' type='warn' bindtap='closeTunnel' size="mini">关闭</button>
+      <button class='weui-btn mini-btn' type='warn' bindtap='refresh' size="mini">关闭</button>
     </view>
-    
+
     <view wx:if="{{alertList.length>0}}" class="weui-panel__bd">
       <block wx:for="{{alertList}}" wx:key="id">
-        <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+        <navigator open-type='switchTab' url="../home/home" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
           <image class="userinfo-avatar" src="{{item.imgUrl}}" background-size="cover" />
           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
             <view class="weui-media-box__title">{{item.name}}</view>
             <view class="weui-media-box__desc">{{item.content}}</view>
           </view>
-          <!-- <button class='weui-btn mini-btn' type='primary' bindtap='getDetail' data-id="{{item.id}}" size="mini">查看</button> -->
           <button class='weui-btn mini-btn' type='warn' bindtap='cancelAlert' data-id="{{item.id}}" size="mini">删除</button>
-        </view>
+        </navigator>
       </block>
       <!-- <view class="weui-panel__ft">
         <view class="weui-cell weui-cell_access weui-cell_link">

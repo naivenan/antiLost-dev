@@ -4,7 +4,6 @@ var app = getApp();
 var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
 var util = require('../../utils/util.js')
-var tunnel = 'off'
 
 Page({
   data: {
@@ -37,8 +36,7 @@ Page({
     this.setData({
       user: app.globalData.userinfo
     })
-    tunnel = 'on';
-    this.openTunnel();
+    // this.openTunnel();
   },
 
   getOlderList: function (param) {
@@ -189,7 +187,6 @@ Page({
     if (this.tunnel) {
       this.tunnel.close();
     }
-    tunnel = 'off';
     util.showBusy('警报信道关闭中...')
     this.setData({ tunnelStatus: 'closed' })
   },
@@ -206,10 +203,6 @@ Page({
    */
   onShow: function () {
     console.log('onShow...');
-    if (tunnel != 'on') {
-      this.openTunnel();
-      tunnel = 'on';
-    }
     this.getOlderList();
     this.getAlertList();
   },
@@ -226,10 +219,7 @@ Page({
    */
   onUnload: function () {
     console.log('onUnload...');
-    if (tunnel == 'on') {
-      this.closeTunnel();
-      tunnel = 'off';
-    }
+    // this.closeTunnel();
   },
 
   /**
