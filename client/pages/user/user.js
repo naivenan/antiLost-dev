@@ -29,7 +29,6 @@ Page({
             wx.clearStorage();
           }
         })
-
       }
     })
   },

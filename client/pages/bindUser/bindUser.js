@@ -1,4 +1,5 @@
 // pages/bindUser/bindUser.js
+var config = require('../../config');
 var app = getApp();
 
 Page({
@@ -25,7 +26,7 @@ Page({
         title: '申请成功',
       })
       wx.request({
-        url: 'https://cjt9xe52.qcloud.la/weapp/addolder',
+        url: config.service.addolder,
         data: {
           uid: that.data.uid,
           user: user

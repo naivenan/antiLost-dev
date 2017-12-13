@@ -1,4 +1,5 @@
 // pages/reg/reg.js
+var config = require('../../config')
 var util = require('../../utils/util.js')
 
 Page({
@@ -37,7 +38,7 @@ Page({
     var result = this.confirm(this.data.user, this.data.pswd, this.data.tel, this.data.token);
     if (result) {
       wx.request({
-        url: 'https://cjt9xe52.qcloud.la/weapp/register',
+        url: config.service.register,
         data: {
           user: that.data.user,
           pswd: that.data.pswd,

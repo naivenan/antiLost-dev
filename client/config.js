@@ -23,7 +23,23 @@ var config = {
         // 上传图片接口
         uploadUrl: `${host}/weapp/upload`,
 
+        wxlogin: `${host}/weapp/wxlogin`,
+
+        userlogin: `${host}/weapp/userlogin`,
+
+        register: `${host}/weapp/register`,
+
+        olderlist: `${host}/weapp/olderlist`,
+
+        alertlist: `${host}/weapp/alertlist`,
+
         alertTunnelUrl: `${host}/weapp/alertTunnel`,
+        
+        cancelAlert: `${host}/weapp/cancelAlert`,
+
+        addolder: `${host}/weapp/addolder`,
+
+        deleteolder: `${host}/weapp/deleteolder`,
 
         userUpdate: `${host}/weapp/userUpdate`
     }

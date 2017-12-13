@@ -42,7 +42,7 @@ Page({
   getOlderList: function (param) {
     var that = this;
     wx.request({
-      url: 'https://cjt9xe52.qcloud.la/weapp/olderlist',
+      url: config.service.olderlist,
       data: {
         uid: that.data.user.id
       },
@@ -65,7 +65,7 @@ Page({
   getAlertList: function (param) {
     var that = this;
     wx.request({
-      url: 'https://cjt9xe52.qcloud.la/weapp/alertlist',
+      url: config.service.alertlist,
       data: {
         bid: this.data.user.id
       },
@@ -89,7 +89,7 @@ Page({
     console.log('cancelAlert: ' + e.currentTarget.dataset.id);
     var cancelId = e.currentTarget.dataset.id;
     wx.request({
-      url: 'https://cjt9xe52.qcloud.la/weapp/cancelAlert',
+      url: config.service.cancelAlert,
       data: {
         id: cancelId
       },

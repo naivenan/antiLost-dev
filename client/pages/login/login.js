@@ -29,7 +29,7 @@ Page({
         util.showSuccess('请求成功完成')
         console.log('request success', result)
         wx.request({
-          url: 'https://cjt9xe52.qcloud.la/weapp/wxlogin',
+          url: config.service.wxlogin,
           data: {
             user: result.data.data.openId,
             name: result.data.data.nickName,
@@ -70,7 +70,7 @@ Page({
       return
     }
     wx.request({
-      url: 'https://cjt9xe52.qcloud.la/weapp/userlogin',
+      url: config.service.userlogin,
       data: {
         user: this.data.user,
         pswd: this.data.pswd

@@ -12,8 +12,8 @@
       <view class="weui-cell__bd">{{item.name}}</view>
     </label>
   </checkbox-group>
-  <view class="weui-btn-area">
-    <button class="weui-btn" type="warn" bindtap="deleteUser">解除绑定</button>
-    <button class="weui-btn" type="primary" bindtap="back">返回首页</button>
-  </view>
+</view>
+<view class="weui-btn-area">
+  <button class="weui-btn" type="warn" bindtap="deleteUser">解除绑定</button>
+  <button class="weui-btn" type="primary" bindtap="back">返回首页</button>
 </view>

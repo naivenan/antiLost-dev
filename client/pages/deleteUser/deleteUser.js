@@ -1,4 +1,5 @@
 // pages/deleteUser/deleteUser.js
+var config = require('../../config');
 var app = getApp();
 
 Page({
@@ -45,7 +46,7 @@ Page({
         if (res.confirm) {
           console.log('用户点击确定')
           wx.request({
-            url: 'https://cjt9xe52.qcloud.la/weapp/deleteolder',
+            url: config.service.deleteolder,
             data: {
               uid: that.data.uid,
               list: deletelist
@@ -66,7 +67,7 @@ Page({
   getOlderList: function (param) {
     var that = this;
     wx.request({
-      url: 'https://cjt9xe52.qcloud.la/weapp/olderlist',
+      url: config.service.olderlist,
       data: {
         uid: that.data.uid
       },
