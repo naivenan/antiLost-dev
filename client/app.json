@@ -38,7 +38,7 @@
         "selectedIconPath": "images/icon/home_blue.png"
       },
       {
-        "pagePath": "pages/home/home",
+        "pagePath": "pages/location/location",
         "text": "位置",
         "iconPath": "images/icon/map-marker.png",
         "selectedIconPath": "images/icon/map-marker_blue.png"

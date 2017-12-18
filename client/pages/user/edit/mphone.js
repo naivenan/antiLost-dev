@@ -21,7 +21,10 @@ Page({
     })
   },
   getToken: function () {
-
+    var tk = Math.round(Math.random() * 1000000);
+    this.setData({
+      token: tk
+    })
   },
   back: function () {
     this.done();

@@ -84,9 +84,9 @@ Page({
     })
   },
 
-  cancelAlert: function (e) {
+  checkAlert: function (e) {
     var that = this;
-    console.log('cancelAlert: ' + e.currentTarget.dataset.id);
+    console.log('checkAlert: ' + e.currentTarget.dataset.id);
     var cancelId = e.currentTarget.dataset.id;
     wx.request({
       url: config.service.cancelAlert,
@@ -109,6 +109,9 @@ Page({
           util.showModel('取消失败', '请重试')
         }
       }
+    })
+    wx.switchTab({
+      url: '../home/home',
     })
   },
 
@@ -147,7 +150,7 @@ Page({
 
     // 监听自定义消息（服务器进行推送）
     tunnel.on('alert', alert => {
-      util.showModel('信道消息', alert)
+      util.showModel('警报提醒', alert.name+alert.content)
       console.log('收到警报提醒：', alert)
       wx.setStorage({
         key: 'alert',

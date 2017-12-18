@@ -7,7 +7,7 @@ App({
     qcloud.setLoginUrl(config.service.loginUrl)
   },
   globalData: {
-    userInfo: null,
+    userinfo: {},
     olderList: [],
     alertList: [],
   }
