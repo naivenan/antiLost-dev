@@ -111,7 +111,7 @@ Page({
       }
     })
     wx.switchTab({
-      url: '../home/home',
+      url: '../location/location',
     })
   },
 
