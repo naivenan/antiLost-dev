@@ -41,7 +41,9 @@ var config = {
 
     deleteolder: `${host}/weapp/deleteolder`,
 
-    userUpdate: `${host}/weapp/userUpdate`
+    userUpdate: `${host}/weapp/userUpdate`,
+
+    location: `${host}/weapp/location`
   },
 
 };

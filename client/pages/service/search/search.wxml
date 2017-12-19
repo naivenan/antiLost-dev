@@ -11,7 +11,8 @@
           </view>
         </view>
       </view>
-      <view class="weui-search-bar__cancel-btn" bindtap="hideInput">取消</view>
+      <view class="weui-search-bar__cancel-btn" bindtap="searchInput">搜索</view>
+       <view class="weui-search-bar__cancel-btn" wx:if='{{system!="iOS"}}' bindtap="hideInput">返回</view> 
     </view>
     <view class="weui-cells searchbar-result" wx:if="{{suggestion.length > 0}}">
       <block wx:for="{{suggestion}}" wx:key="title">

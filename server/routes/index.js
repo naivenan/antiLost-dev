@@ -48,5 +48,7 @@ router.post('/alertTunnel', controllers.alertlist.post)
 router.get('/alert', controllers.alertlist.alert)
 router.get('/cancelAlert', controllers.alertlist.cancel)
 
+router.get('/location',controllers.location)
+
 
 module.exports = router

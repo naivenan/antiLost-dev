@@ -7,7 +7,6 @@
     "pages/appindex/index",
     "pages/bindUser/bindUser",
     "pages/deleteUser/deleteUser",
-    "pages/home/home",
     "pages/location/location",
     "pages/location-detail/location",
     "pages/service/service",

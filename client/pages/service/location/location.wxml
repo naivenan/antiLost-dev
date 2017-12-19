@@ -1,5 +1,6 @@
 <view class="main">
-  <map id="map" longitude="{{longitude}}" latitude="{{latitude}}" markers="{{markers}}" controls="{{controls}}" bindmarkertap="doMarkertap" bindcontroltap="doControltap" polyline="{{polyline}}" include-points="{{markers}}" show-location>
+  <map id="map" longitude="{{longitude}}" latitude="{{latitude}}" markers="{{markers}}" controls="{{system == 'iOS' ? null : controls}}" bindmarkertap="doMarkertap" bindcontroltap="doControltap" polyline="{{polyline}}" include-points="{{includePoints}}"
+    show-location>
   </map>
   <view class="descript">
     <view class="left">

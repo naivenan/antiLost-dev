@@ -1,84 +1,79 @@
 // 引入SDK核心类
 var amapFile = require('../../resources/map/amap-wx.js');
 var amapInstance;
+var config = require('../../config.js')
 //获取应用实例
 var app = getApp()
 Page({
   //数据信息
   data: {
+    user: {},
     markers: [],
     longitude: 0,
     latitude: 0,
     distance: '',
     cost: '',
     polyline: [],
+    includePoints:[],
     origin: null,
     destination: null,
     briefAddr: null,
-    toiletName: null,
+    olderName: null,
     navigateImag: "../../images/ios7-navigate.png"
   },
-  //页面加载事件
-  onLoad: function (option) {
+  getOlderLocation: function () {
     var that = this;
-    //初始化地图接口实例
-    amapInstance = new amapFile.AMapWX({ key: 'cd17f895f7d70ef688f4bf600e067a8e' });
-    var param = JSON.parse(option.param);
-    var list = param.list,
+    wx.request({
+      url: config.service.location,
+      data: {
+        uid: that.data.user.id
+      },
+      success: res => {
+        that.setData({
+          list: res.data.data
+        })
+        if (res.data.data.length>0){
+          that.init()
+        }
+      }
+    })
+  },
+  init: function () {
+    var that = this;
+    var list = this.data.list,
       //中心点位置
-      latitude = param.latitude,
-      longitude = param.longitude,
-      destination = param.destination,
-      briefAddr = param.briefAddr,
-      toiletName = param.name;
-    var result = [];
+      latitude = this.data.latitude,
+      longitude = this.data.longitude;
+    var result = [], include = [];
+    include.push({
+      latitude: latitude,
+      longitude: longitude,
+    })
     //数据组装
     list.forEach(function (item, index) {
-      //为零时显示最近的气泡
-      if (!index) {
-        result.push({
-          width: 40,
-          height: 40,
-          iconPath: "/images/marker.png",
-          id: item.id,
-          latitude: item.latitude,
-          longitude: item.longitude,
-          briefAddr: item.briefAddr,
-          toiletName: item.name,
-          callout: {
-            content: "离你最近",
-            color: "#b5b1b1",
-            fontSize: 12,
-            borderRadius: 15,
-            bgColor: "#262930",
-            padding: 10,
-            display: 'ALWAYS'
-          }
-        })
-      } else {
-        result.push({
-          width: 40,
-          height: 40,
-          iconPath: "/images/marker.png",
-          id: item.id,
-          latitude: item.latitude,
-          longitude: item.longitude,
-          briefAddr: item.briefAddr,
-          toiletName: item.name
-        })
-      }
+      result.push({
+        width: 40,
+        height: 40,
+        iconPath: "../../images/marker.png",
+        id: item.id,
+        latitude: item.lat,
+        longitude: item.lng,
+        briefAddr: item.addr,
+        olderName: item.name,
+        label: {
+          content: item.name
+        }
+      })
+      include.push({
+        latitude: item.lat,
+        longitude: item.lng
+      })
     });
     //赋值
     that.setData({
       markers: result,
-      latitude: latitude,
-      longitude: longitude,
-      briefAddr: briefAddr,
-      toiletName: toiletName
+      includePoints: include
     });
-    //初始化路径规划
-    that.doWalkingRoute(destination);
-    //TODO 设置控件定位或者复位控件，计算位置的时候需要使用系统方法，获取屏幕宽度来进行设置
   },
   //点击marker事件
   doMarkertap: function (obj) {
@@ -88,7 +83,7 @@ Page({
     that.doWalkingRoute(marker.longitude + "," + marker.latitude);
     that.setData({
       briefAddr: marker.briefAddr,
-      toiletName: marker.toiletName
+      olderName: marker.olderName
     });
   },
   //进行路径规划
@@ -96,12 +91,11 @@ Page({
     var that = this;
     //设置详细路径需要的值
     that.setData({
-      origin: that.data.origin,
       destination: destination
     });
     //调用高德地图路径规划
     amapInstance.getWalkingRoute({
-      origin: res.longitude + "," + res.latitude,
+      origin: that.data.origin,
       destination: destination,
       success: function (data) {
         var points = [];
@@ -175,5 +169,80 @@ Page({
         url: '../location-detail/location?param=' + JSON.stringify(param)
       })
     }, 200);
+  },
+
+  //页面加载事件
+  onLoad: function (option) {
+    var that = this;
+    that.setData({
+      user: app.globalData.userinfo,
+      briefAddr: '请点击目标位置查询路线',
+      olderName: '提示',
+    })
+    //初始化地图接口实例
+    amapInstance = new amapFile.AMapWX({ key: 'cd17f895f7d70ef688f4bf600e067a8e' });
+  },
+
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    var that = this;
+    wx.getLocation({
+      type: 'gcj02',
+      success: function (res) {
+        var latitude = res.latitude
+        var longitude = res.longitude
+        console.log('latitude: ' + latitude);
+        console.log('longitude: ' + longitude);
+        console.log(res.accuracy);
+        //设置经纬度值
+        that.setData({
+          latitude: latitude,
+          longitude: longitude,
+          origin: longitude + ',' + latitude
+        });
+        that.getOlderLocation();
+      }
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
   }
 })

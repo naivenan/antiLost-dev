@@ -6,15 +6,25 @@
       markers="{{markers}}" 
       bindmarkertap="doMarkertap"
       polyline="{{polyline}}"
+      include-points='{{includePoints}}'
       show-location>
   </map>
-  <view class="descript">
+  <view class="descript" wx:if='{{markers.length>0}}'>
     <view class="left">
-      <view class="name">{{toiletName}}</view>
+      <view class="name">{{olderName}}</view>
       <view class="brief-addr">{{briefAddr}}</view>
     </view>
     <view class="right">
       <image class="navigate" src="{{navigateImag}}" mode="aspectFit" bindtap="goDetail"></image>
+    </view>
+  </view>
+  <view class='descript' wx:else>
+    <view class="left">
+      <view class="name">抱歉</view>
+      <view class="brief-addr">暂无绑定的老人位置</view>
+    </view>
+    <view class="right">
+      <image class="navigate" src="{{navigateImag}}" mode="aspectFit"></image>
     </view>
   </view>
 </view>

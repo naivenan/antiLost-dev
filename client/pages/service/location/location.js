@@ -6,6 +6,7 @@ var app = getApp()
 Page({
   //数据信息
   data: {
+    system: app.globalData.system,
     markers: [],
     controls: [{
       id: 1,
@@ -23,6 +24,7 @@ Page({
     distance: '',
     cost: '',
     polyline: [],
+    includePoints: [],
     origin: null,
     destination: null,
     address: null,
@@ -44,47 +46,33 @@ Page({
       destination = param.destination,
       address = param.address,
       title = param.title;
-    var result = [];
+    var result = [], include = [];
+    include.push({
+      latitude: param.latitude,
+      longitude: param.longitude,
+    })
     //数据组装
     list.forEach(function (item, index) {
-      //为零时显示最近的气泡
-      if (!index) {
-        result.push({
-          width: 40,
-          height: 40,
-          iconPath: "../../../images/marker.png",
-          id: item.id,
-          latitude: item.location.lat,
-          longitude: item.location.lng,
-          address: item.address,
-          title: item.title,
-          callout: {
-            content: "离你最近",
-            color: "#b5b1b1",
-            fontSize: 12,
-            borderRadius: 15,
-            bgColor: "#262930",
-            padding: 10,
-            display: 'ALWAYS'
-          }
-        })
-      } else {
-        result.push({
-          width: 40,
-          height: 40,
-          iconPath: "../../../images/marker.png",
-          id: item.id,
-          latitude: item.location.lat,
-          longitude: item.location.lng,
-          address: item.address,
-          title: item.title,
-        })
-      }
+      include.push({
+        latitude: item.location.lat,
+        longitude: item.location.lng
+      })
+      result.push({
+        width: 40,
+        height: 40,
+        iconPath: "../../../images/marker.png",
+        id: item.id,
+        latitude: item.location.lat,
+        longitude: item.location.lng,
+        address: item.address,
+        title: item.title
+      })
     });
     console.log('result: ' + result);
     //赋值
     that.setData({
       markers: result,
+      includePoints: include,
       latitude: latitude,
       longitude: longitude,
       address: address,
