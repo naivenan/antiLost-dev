@@ -14,7 +14,7 @@ Page({
     distance: '',
     cost: '',
     polyline: [],
-    includePoints:[],
+    includePoints: [],
     origin: null,
     destination: null,
     briefAddr: null,
@@ -32,7 +32,7 @@ Page({
         that.setData({
           list: res.data.data
         })
-        if (res.data.data.length>0){
+        if (res.data.data.length > 0) {
           that.init()
         }
       }
@@ -50,11 +50,12 @@ Page({
       longitude: longitude,
     })
     //数据组装
+    var alertList = app.globalData.alertList;
     list.forEach(function (item, index) {
       result.push({
         width: 40,
         height: 40,
-        iconPath: "../../images/marker.png",
+        iconPath: that.exist(alertList, item) ? "../../images/marker_alert.png" : "../../images/marker.png",
         id: item.id,
         latitude: item.lat,
         longitude: item.lng,
@@ -74,6 +75,15 @@ Page({
       markers: result,
       includePoints: include
     });
+  },
+  exist: function (array, item) {
+    var flag = false;
+    array.forEach(function (o, i) {
+      if (o.uid == item.id) {
+        flag = true;
+      }
+    })
+    return flag;
   },
   //点击marker事件
   doMarkertap: function (obj) {

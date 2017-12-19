@@ -16,7 +16,7 @@
     <view class="weui-cell__ft weui-cell__ft_in-access">{{user.mphone?user.mphone:'未设置'}}</view>
   </navigator>
   <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-    <view class="weui-cell__bd">出生日期</view>
+    <view class="weui-cell__bd">生日</view>
     <view class="weui-cell__ft weui-cell__ft_in-access">
       <picker mode="date" value="{{date}}" start="1900-01-01" end="{{today}}" bindchange="bindDateChange">
         <view class="picker" wx:if='{{user.birthday}}'>

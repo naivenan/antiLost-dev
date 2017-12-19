@@ -184,7 +184,11 @@ module.exports = {
 
   alertlist: async ctx => {
     var query = ctx.request.query;
-    var res = await mysql('alert').select('*').where({ bid: query.bid, state: 1 });
+    var res = await mysql.select(
+      'alert.id', 't.bid', 'alert.uid', 't.name', 'alert.content', 't.imgUrl'
+      ).from(function () {
+      this.select('*').from('user').where({ bid: query.bid }).as('t')
+    }).innerJoin('alert', 't.id', 'alert.uid').where({ state: 1 })
     ctx.state.data = res;
   },
 
