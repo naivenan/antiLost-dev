@@ -14,7 +14,7 @@ Page({
     pswd: '123',
     formId: null,
   },
-  register: function () {
+  reg: function () {
     wx.navigateTo({
       url: '../reg/reg'
     })
