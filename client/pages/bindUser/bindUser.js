@@ -20,7 +20,7 @@ Page({
   sendApply: function () {
     var that = this;
     var user = this.data.user
-    console.log('user: ' + user);
+    console.log('sendApply... user: ' + user);
     if (user != null && user != '') {
       wx.showToast({
         title: '申请成功',
@@ -32,6 +32,7 @@ Page({
           user: user
         },
         success: function (res) {
+          console.log('sendApply:');
           console.log(res.data);
         }
       })

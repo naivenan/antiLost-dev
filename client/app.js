@@ -8,6 +8,7 @@ App({
     qcloud.setLoginUrl(config.service.loginUrl)
     wx.getSystemInfo({
       success: function(res) {
+        console.log('wx.getSystemInfo:');
         console.log(res);
         that.globalData.system = res.system.split(' ')[0];
       },

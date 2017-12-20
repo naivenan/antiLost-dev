@@ -17,9 +17,14 @@ Page({
     includePoints: [],
     origin: null,
     destination: null,
-    briefAddr: null,
-    olderName: null,
-    navigateImag: "../../images/ios7-navigate.png"
+    briefAddr: '',
+    olderName: '',
+    title: '',
+    list: [],
+    steps: [],    
+    navigateImag: "../../images/ios7-navigate.png",
+    viewclass: ['flex-item active', 'flex-item', 'flex-item'],
+    active: 0
   },
   getOlderLocation: function () {
     var that = this;
@@ -32,9 +37,7 @@ Page({
         that.setData({
           list: res.data.data
         })
-        if (res.data.data.length > 0) {
-          that.init()
-        }
+        that.init();
       }
     })
   },
@@ -53,8 +56,8 @@ Page({
     var alertList = app.globalData.alertList;
     list.forEach(function (item, index) {
       result.push({
-        width: 40,
-        height: 40,
+        width: 20,
+        height: 20,
         iconPath: that.exist(alertList, item) ? "../../images/marker_alert.png" : "../../images/marker.png",
         id: item.id,
         latitude: item.lat,
@@ -90,59 +93,11 @@ Page({
     var that = this;
     //查询marker的详细信息
     var marker = that.getMarkerById(obj.markerId);
-    that.doWalkingRoute(marker.longitude + "," + marker.latitude);
+    that.doRoute(marker.longitude + "," + marker.latitude);
     that.setData({
       briefAddr: marker.briefAddr,
       olderName: marker.olderName
     });
-  },
-  //进行路径规划
-  doWalkingRoute: function (destination) {
-    var that = this;
-    //设置详细路径需要的值
-    that.setData({
-      destination: destination
-    });
-    //调用高德地图路径规划
-    amapInstance.getWalkingRoute({
-      origin: that.data.origin,
-      destination: destination,
-      success: function (data) {
-        var points = [];
-        if (data.paths && data.paths[0] && data.paths[0].steps) {
-          var steps = data.paths[0].steps;
-          for (var i = 0; i < steps.length; i++) {
-            var poLen = steps[i].polyline.split(';');
-            for (var j = 0; j < poLen.length; j++) {
-              points.push({
-                longitude: parseFloat(poLen[j].split(',')[0]),
-                latitude: parseFloat(poLen[j].split(',')[1])
-              })
-            }
-          }
-        }
-        that.setData({
-          polyline: [{
-            points: points,
-            color: "#0091ff",
-            width: 6
-          }]
-        });
-        if (data.paths[0] && data.paths[0].distance) {
-          that.setData({
-            distance: data.paths[0].distance + ' 米'
-          });
-        }
-        if (data.paths[0] && data.paths[0].duration) {
-          that.setData({
-            cost: parseInt(data.paths[0].duration / 60) + ' 分钟'
-          });
-        }
-      },
-      fail: function (info) {
-      }
-    })
-
   },
   //根据marker的id获取详情信息
   getMarkerById: function (id) {
@@ -158,6 +113,78 @@ Page({
     }
     return result;
   },
+  //进行路径规划
+  doRoute: function (destination) {
+    var that = this;
+    //设置详细路径需要的值
+    that.setData({
+      destination: destination
+    });
+    //调用高德地图路径规划
+    switch (that.data.active) {
+      case 0: that.goToCar(); break;
+      case 1: that.goToWalk(); break;
+      case 2: that.goToRide(); break;
+      default: that.goToCar(); break;
+    }
+  },
+  goToCar: function () {
+    var that = this;
+    that.setData({
+      viewclass: ['flex-item active', 'flex-item', 'flex-item'],
+      active: 0
+    })
+    if (!that.data.destination) {
+      return
+    }
+    amapInstance.getDrivingRoute({
+      origin: that.data.origin,
+      destination: that.data.destination,
+      success: function (data) {
+        callback(data, that);
+      },
+      fail: function (info) {
+      }
+    })
+  },
+  goToWalk: function () {
+    var that = this;
+    that.setData({
+      viewclass: ['flex-item', 'flex-item active', 'flex-item'],
+      active: 1
+    })
+    if (!that.data.destination) {
+      return
+    }
+    amapInstance.getWalkingRoute({
+      origin: that.data.origin,
+      destination: that.data.destination,
+      success: function (data) {
+        callback(data, that);
+      },
+      fail: function (info) {
+      }
+    })
+  },
+  goToRide: function () {
+    var that = this;
+    that.setData({
+      viewclass: ['flex-item', 'flex-item', 'flex-item active'],
+      active: 2
+    })
+    if (!that.data.destination) {
+      return
+    }
+    amapInstance.getRidingRoute({
+      origin: that.data.origin,
+      destination: that.data.destination,
+      success: function (data) {
+        callback(data, that);
+      },
+      fail: function (info) {
+      }
+    })
+  },
   //详细的路径规划
   goDetail: function () {
     var that = this;
@@ -165,6 +192,7 @@ Page({
     var param = {
       origin: that.data.origin,
       destination: that.data.destination,
+      steps: that.data.steps
     }
     //设置点击图片效果
     that.setData({
@@ -186,8 +214,6 @@ Page({
     var that = this;
     that.setData({
       user: app.globalData.userinfo,
-      briefAddr: '请点击目标位置查询路线',
-      olderName: '提示',
     })
     //初始化地图接口实例
     amapInstance = new amapFile.AMapWX({ key: 'cd17f895f7d70ef688f4bf600e067a8e' });
@@ -212,6 +238,7 @@ Page({
         console.log(res.accuracy);
         //设置经纬度值
         that.setData({
+          user: app.globalData.userinfo,
           latitude: latitude,
           longitude: longitude,
           origin: longitude + ',' + latitude
@@ -232,7 +259,26 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.setData({
+      user: {},
+      markers: [],
+      longitude: 0,
+      latitude: 0,
+      distance: '',
+      cost: '',
+      polyline: [],
+      includePoints: [],
+      origin: null,
+      destination: null,
+      briefAddr: null,
+      olderName: null,
+      title: '',
+      list: [],
+      steps: [],
+      navigateImag: "../../images/ios7-navigate.png",
+      viewclass: ['flex-item active', 'flex-item', 'flex-item'],
+      active: 0
+    })
   },
 
   /**
@@ -256,3 +302,50 @@ Page({
 
   }
 })
+
+function callback(data, that) {
+  var points = [];
+  if (data.paths && data.paths[0] && (data.paths[0].steps || data.paths[0].rides)) {
+    var steps = data.paths[0].steps || data.paths[0].rides;
+    that.setData({
+      steps: steps
+    })
+    for (var i = 0; i < steps.length; i++) {
+      var poLen = steps[i].polyline.split(';');
+      for (var j = 0; j < poLen.length; j++) {
+        points.push({
+          longitude: parseFloat(poLen[j].split(',')[0]),
+          latitude: parseFloat(poLen[j].split(',')[1])
+        })
+      }
+    }
+  }
+  that.setData({
+    polyline: [{
+      points: points,
+      color: "#0091ff",
+      width: 6
+    }]
+  });
+  var suf = '', active = that.data.active;
+  if (data.paths[0] && data.paths[0].distance) {
+    suf += ' ' + data.paths[0].distance + '米';
+    that.setData({
+      distance: data.paths[0].distance + '米'
+    });
+  }
+  if (data.paths[0] && data.paths[0].duration) {
+    suf += ' 花费' + parseInt(data.paths[0].duration / 60) + '分钟';
+    that.setData({
+      cost: parseInt(data.paths[0].duration / 60) + '分钟',
+      title: suf
+    });
+  }
+  if (data.taxi_cost) {
+    suf += ' 打车约' + parseInt(data.taxi_cost) + '元'
+    that.setData({
+      cost: '打车约' + parseInt(data.taxi_cost) + '元',
+      title: suf
+    });
+  }
+}

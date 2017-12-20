@@ -1,18 +1,19 @@
 <view class="main">
-  <map id="map" 
-      longitude="{{longitude}}" 
-      latitude="{{latitude}}" 
-      scale="15" 
-      markers="{{markers}}" 
-      bindmarkertap="doMarkertap"
-      polyline="{{polyline}}"
-      include-points='{{includePoints}}'
-      show-location>
+  <view class="flex-style">
+    <view class="{{viewclass[0]}}" bindtouchstart="goToCar">驾车</view>
+    <view class="{{viewclass[1]}}" bindtouchstart="goToWalk">步行</view>
+    <view class="{{viewclass[2]}}" bindtouchstart="goToRide">骑行</view>
+  </view>
+  <map id="map" wx:if='{{includePoints}}' longitude="{{longitude}}" latitude="{{latitude}}" scale="15" markers="{{markers}}" bindmarkertap="doMarkertap" polyline="{{polyline}}" include-points='{{includePoints}}' show-location>
   </map>
   <view class="descript" wx:if='{{markers.length>0}}'>
-    <view class="left">
-      <view class="name">{{olderName}}</view>
-      <view class="brief-addr">{{briefAddr}}</view>
+    <view class="left" wx:if='{{olderName}}'>
+      <view class="name">{{olderName+': '+briefAddr}}</view>
+      <view class="brief-addr">{{title}}</view>
+    </view>
+    <view class="left" wx:else>
+      <view class="name">提示</view>
+      <view class="brief-addr">请点击目标位置查询路线</view>
     </view>
     <view class="right">
       <image class="navigate" src="{{navigateImag}}" mode="aspectFit" bindtap="goDetail"></image>

@@ -31,3 +31,4 @@
   <button formType="reset">Reset</button>
 </form>
 <text>用于发送模板消息的formId: {{formId}}</text> -->
+<!-- <text>{{res}}</text> -->

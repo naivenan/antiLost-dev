@@ -11,7 +11,7 @@
   <view wx:if='{{olderList.length>0}}' class='olders'>
     <view class="weui-grids">
       <block wx:for="{{olderList}}" wx:key="id">
-        <navigator open-type='switchTab' url="../location/locatin" class="weui-grid" hover-class="weui-grid_active">
+        <navigator open-type='switchTab' url="../location/location" class="weui-grid" hover-class="weui-grid_active">
           <image class="weui-grid__icon" src="{{item.imgUrl}}" background-size="cover" />
           <view class="weui-grid__label">{{item.name}}</view>
         </navigator>

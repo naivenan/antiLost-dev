@@ -13,11 +13,9 @@ Page({
 
   checkboxChange: function (e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value);
-
     var checkboxItems = this.data.olderList, values = e.detail.value;
     for (var i = 0, lenI = checkboxItems.length; i < lenI; ++i) {
       checkboxItems[i].checked = false;
-
       for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
         if (checkboxItems[i].value == values[j]) {
           checkboxItems[i].checked = true;
@@ -25,7 +23,6 @@ Page({
         }
       }
     }
-
     this.setData({
       olderList: checkboxItems
     });
@@ -52,6 +49,7 @@ Page({
               list: deletelist
             },
             success: function (res) {
+              console.log('deleteUser:');
               console.log(res.data);
               that.getOlderList();
             }
@@ -72,6 +70,7 @@ Page({
         uid: that.data.uid
       },
       success: function (res) {
+        console.log('getOlderList:');
         console.log(res.data);
         var list = res.data.data;
         app.globalData.olderList = list;
@@ -93,17 +92,6 @@ Page({
     })
   },
 
-  refresh: function () {
-    var that = this;
-    var list = app.globalData.olderList;
-    for (let i = 0; i < list.length; i++) {
-      list[i].value = i;
-      list[i].checked = false;
-    }
-    that.setData({
-      olderList: list
-    })
-  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -124,10 +112,15 @@ Page({
    */
   onShow: function () {
     var that = this;
+    var list = app.globalData.olderList;
+    for (let i = 0; i < list.length; i++) {
+      list[i].value = i;
+      list[i].checked = false;
+    }
     that.setData({
-      uid:app.globalData.userinfo.id
+      uid:app.globalData.userinfo.id,
+      olderList: list
     })
-    that.refresh();
   },
 
   /**

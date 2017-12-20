@@ -1,7 +1,13 @@
 <scroll-view class="scroll" scroll-y="true">
   <view class="zan-panel">
+    <view class="zan-cell">
+      <view class="zan-cell__bd">开始</view>
+    </view>
     <view class="zan-cell" wx:for="{{steps}}" wx:key="unique">
       <view class="zan-cell__bd">{{item.instruction}}</view>
+    </view>
+    <view class="zan-cell">
+      <view class="zan-cell__bd">结束</view>
     </view>
   </view>
 </scroll-view>

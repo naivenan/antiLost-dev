@@ -43,6 +43,7 @@ Page({
       },
       address_format: 'short',
       success: function (res) {
+        console.log('searchInput:');
         console.log(res);
         that.setData({
           list: res.data,
@@ -79,13 +80,14 @@ Page({
       keyword: input,
       region: this.data.city,
       success: function (res) {
-        console.log('success: ' + res);
+        console.log('inputTyping.getSuggestion:');
+        console.log(res);
         that.setData({
           suggestion: res.data
         })
       },
       fail: function (res) {
-        console.log('fail: ' + res);
+        console.log(res);
       }
     })
   },
@@ -124,6 +126,7 @@ Page({
       page_index: page,
       distance: 1000,   //可由用户修改100,200,500,1000
       success: function (res) {
+        console.log('search:');
         console.log(res);
         that.setData({
           list: list.concat(res.data),
@@ -202,7 +205,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log('page search onLoad...');
     var that = this;
     if (!qqmapsdk) {
       qqmapsdk = new QQMapWX({
@@ -232,6 +234,7 @@ Page({
             longitude: longitude
           },
           success: function (res) {
+            console.log('onLoad.getLocation.reverseGeocoder:');
             console.log(res);
             console.log('city: ' + res.result.ad_info.city);
             that.setData({

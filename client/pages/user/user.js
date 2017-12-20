@@ -21,12 +21,16 @@ Page({
     })
     console.log('logout... user: ' + this.data.user);
     wx.switchTab({
-      url: '../appindex/index',
+      url: '../location/location',
       success: function () {
-        wx.redirectTo({
-          url: '../login/login',
-          success: function () {
-            wx.clearStorage();
+        var page = getCurrentPages()[0];
+        page.onUnload();
+        wx.switchTab({
+          url: '../appindex/index',
+          success: function(){
+            wx.redirectTo({
+              url: '../login/login'
+            })
           }
         })
       }
@@ -73,11 +77,13 @@ Page({
 
           success: function (res) {
             util.showSuccess('上传图片成功')
+            console.log('doUpload:')
             console.log(res)
-            res = JSON.parse(res.data)
-            console.log(res)
+            var response = JSON.parse(res.data)
+            console.log('response:');
+            console.log(response)
             var user = that.data.user;
-            user.imgUrl = res.data.imgUrl;
+            user.imgUrl = response.data.imgUrl;
             app.globalData.userinfo = user;
             that.setData({
               user: user 
@@ -104,9 +110,7 @@ Page({
         user: user
       },
       success: res => {
-        if(res.data.code != 0){
-          console.error(res)
-        }
+        console.log(res);
       },
       fail: res => {
         util.showModel('设置失败','请重新设置');

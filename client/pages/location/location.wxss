@@ -8,7 +8,7 @@
 /*地图样式控制*/
 
 map {
-  height: calc(100vh - 160rpx);
+  height: calc(100vh - 100rpx - 80rpx);
   width: 100%;
 }
 
@@ -22,7 +22,7 @@ map {
 .descript {
   display: flex;
   position: absolute;
-  height: 160rpx;
+  height: 100rpx;
   bottom: 0rpx;
   left: 0rpx;
   right: 0rpx;
@@ -43,17 +43,16 @@ map {
 }
 
 .descript .left .name {
-  height: 70rpx;
-  line-height: 70rpx;
-  font-size: 41rpx;
+  height: 20px;
+  font-size: 30rpx;
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding-top:15rpx;
+  padding-top: 5px;
 }
 
 .descript .left .brief-addr {
-  height: 90rpx;
+  height: 25px;
   font-size: 30rpx;
   display: flex;
   align-items: center;
@@ -62,6 +61,23 @@ map {
 /*详细路径导航按钮*/
 
 .navigate {
-  width: 130rpx;
-  height: 130rpx;
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.flex-style{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.flex-item{
+  height: 35px; 
+  line-height: 35px;
+  text-align: center;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1
+}
+.flex-item.active{
+  color:#0091ff;
 }

@@ -31,8 +31,8 @@ Page({
   },
 
   onLoad: function () {
-    console.log('pages/appindex/index onLoad...');
-    console.log('globalData.userinfo: ' + app.globalData.userinfo);
+    console.log('onLoad...');
+    console.log('globalData.userinfo: ' + JSON.stringify(app.globalData.userinfo));
     this.setData({
       user: app.globalData.userinfo
     })
@@ -47,6 +47,7 @@ Page({
         uid: that.data.user.id
       },
       success: function (res) {
+        console.log('getOlderList:');
         console.log(res.data);
         if (res.data.code == 0) {
           var list = res.data.data;
@@ -70,6 +71,7 @@ Page({
         bid: this.data.user.id
       },
       success: function (res) {
+        console.log('getAlertList:');
         console.log(res.data);
         if (res.data.code == 0) {
           var list = res.data.data;
@@ -94,6 +96,7 @@ Page({
         id: cancelId
       },
       success: function (res) {
+        console.log('checkAlert:');
         console.log(res.data);
         if (res.data.code == 0) {
           var list = that.data.alertList;

@@ -20,7 +20,6 @@ Page({
   done: function () {
     var that = this;
     var pages = getCurrentPages();
-    console.log('pages: ' + pages);
     var parent = pages[0];
     var user = parent.data.user;
     user.name = that.data.inputValue;

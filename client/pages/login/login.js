@@ -20,14 +20,14 @@ Page({
     })
   },
   wxlogin: function() {
-    util.showBusy('请求中...')
-    var that = this,userinfo = null;
+    util.showBusy('登录中...',3000)
+    var that = this;
     var options = {
       url: config.service.requestUrl,
       login: true,
       success(result) {
-        util.showSuccess('请求成功完成')
-        console.log('request success', result)
+        console.log('wxlogin.qcloud.request:');
+        console.log(result)
         wx.request({
           url: config.service.wxlogin,
           data: {
@@ -38,10 +38,10 @@ Page({
           },
           success: function (res) {
             var data = res.data.data;
+            console.log('wxlogin.wxlogin:');
             console.log(data);
             if (data.state == 'success') {
-              userinfo = data.userinfo
-              app.globalData.userinfo = userinfo;
+              app.globalData.userinfo = data.userinfo;
               wx.switchTab({
                 url: '../appindex/index',
               });
@@ -61,6 +61,8 @@ Page({
     qcloud.request(options);
   },
   login: function (e) {
+    var that = this;
+    util.showBusy('登录中...')
     console.log('login...');
     console.log('user: ' + this.data.user);
     console.log('pswd: ' + this.data.pswd);
@@ -77,6 +79,7 @@ Page({
       },
       success: function (res) {
         var data = res.data.data;
+        console.log('login:');
         console.log(data);
         if(data.state == 'success'){
           app.globalData.userinfo = data.userinfo;

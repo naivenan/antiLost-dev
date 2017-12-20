@@ -47,6 +47,7 @@ Page({
           token: that.data.token
         },
         success: function (res) {
+          console.log('register:');
           console.log(res.data);
           if (res.data.data.state == 'success'){
             wx.showToast({

@@ -38,7 +38,6 @@ Page({
     amapInstance = new amapFile.AMapWX({ key: 'cd17f895f7d70ef688f4bf600e067a8e' });
     console.log('高德地图实例创建完成...');
     var param = JSON.parse(option.param);
-    console.log('param: ' + param);
     //中心点位置
     var list = param.list,
       latitude = param.latitude,
@@ -68,7 +67,6 @@ Page({
         title: item.title
       })
     });
-    console.log('result: ' + result);
     //赋值
     that.setData({
       markers: result,
@@ -113,8 +111,8 @@ Page({
       origin: that.data.origin,
       destination: destination,
       success: function (data) {
-        console.log('路径规划成功...');
-        console.log('data: ' + data);
+        console.log('doWalkingRoute:');
+        console.log(data);
         var points = [];
         if (data.paths && data.paths[0] && data.paths[0].steps) {
           var steps = data.paths[0].steps;
@@ -128,8 +126,6 @@ Page({
             }
           }
         }
-        console.info('路径规划: ');
-        console.info(points);
         that.setData({
           polyline: [{
             points: points,
@@ -149,7 +145,6 @@ Page({
         }
       },
       fail: function (info) {
-        console.info('路径规划失败...')
       }
     })
   },
