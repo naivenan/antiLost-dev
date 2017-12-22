@@ -200,11 +200,8 @@ module.exports = {
     var user = result[0];
     if (result.length > 0) {
       var id = await mysql('alert').insert({
-        bid: user.bid,
         uid: user.id,
-        name: user.name,
-        content: '摔倒了！！！',
-        imgUrl: user.imgUrl,
+        content: '我摔倒了，快来扶我！！！',
         state: 1
       })
       res.push({ id: id[0] })
