@@ -33,6 +33,8 @@ Page({
     var deletelist = [];
     this.data.olderList.forEach(function(o,i){
       if(o.checked){
+        delete o.value;
+        delete o.checked;
         deletelist.push(o);
       }
     })

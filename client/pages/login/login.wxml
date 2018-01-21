@@ -20,7 +20,7 @@
 </view>
 
 <view class="weui-btn-area">
-  <button id="showTooltips" class='weui-btn' type='primary' bindtap='wxlogin'>使用微信登录</button>
+  <button id="showTooltips" class='weui-btn' type='primary' bindtap='loginByWx'>使用微信登录</button>
   <button id="showTooltips" class='weui-btn' type='default' bindtap='login'>登录</button>
   <button id="showTooltips" class='weui-btn' type='default' bindtap='reg'>注册</button>
 </view>

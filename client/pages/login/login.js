@@ -19,8 +19,8 @@ Page({
       url: '../reg/reg'
     })
   },
-  wxlogin: function() {
-    util.showBusy('登录中...',3000)
+  wxlogin: function () {
+    util.showBusy('登录中...', 3000)
     var that = this;
     var options = {
       url: config.service.requestUrl,
@@ -33,7 +33,7 @@ Page({
           data: {
             user: result.data.data.openId,
             name: result.data.data.nickName,
-            sex: result.data.data.gender==1?'男':'女',
+            sex: result.data.data.gender == 1 ? '男' : '女',
             imgUrl: result.data.data.avatarUrl
           },
           success: function (res) {
@@ -60,14 +60,52 @@ Page({
     // 使用 qcloud.request 带登录态登录，可以获取到openId作为用户名
     qcloud.request(options);
   },
+  loginByWx: function (e) {
+    var openid = app.globalData.openid;
+    wx.getUserInfo({
+      success: function (res) {
+        var userInfo = res.userInfo
+        var nickName = userInfo.nickName
+        var avatarUrl = userInfo.avatarUrl
+        var gender = userInfo.gender //性别 0：未知、1：男、2：女
+        var province = userInfo.province
+        var city = userInfo.city
+        var country = userInfo.country
+        wx.request({
+          url: config.service.wxlogin,
+          data: {
+            user: openid,
+            name: nickName,
+            sex: gender == 0 ? '未知' : gender == 1 ? '男' : '女',
+            imgUrl: avatarUrl
+          },
+          success: function (res) {
+            var data = res.data.data;
+            console.log('wxlogin.wxlogin:');
+            console.log(data);
+            if (data.state == 'success') {
+              app.globalData.userinfo = data.userinfo;
+              wx.switchTab({
+                url: '../appindex/index',
+              });
+            } else {
+              util.showModel('登录失败', data.errMessage);
+            }
+          }
+        })
+      }
+    })
+    
+  },
+
   login: function (e) {
     var that = this;
     util.showBusy('登录中...')
     console.log('login...');
     console.log('user: ' + this.data.user);
     console.log('pswd: ' + this.data.pswd);
-    var valid = this.confirm(this.data.user,this.data.pswd);
-    if(!valid){
+    var valid = this.confirm(this.data.user, this.data.pswd);
+    if (!valid) {
       util.showModel('登录失败', '请输入账号密码');
       return
     }
@@ -81,12 +119,12 @@ Page({
         var data = res.data.data;
         console.log('login:');
         console.log(data);
-        if(data.state == 'success'){
+        if (data.state == 'success') {
           app.globalData.userinfo = data.userinfo;
           wx.switchTab({
             url: '../appindex/index',
           });
-        }else{
+        } else {
           util.showModel('登录失败', data.errMessage);
         }
       }
@@ -114,7 +152,7 @@ Page({
       formId: e.detail.formId
     })
     console.log(e);
-    console.log('formId: '+e.detail.formId);
+    console.log('formId: ' + e.detail.formId);
   },
   /**
    * 生命周期函数--监听页面加载
@@ -134,7 +172,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**
