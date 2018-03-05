@@ -5,8 +5,7 @@
 // 此处主机域名修改成腾讯云解决方案分配的域名
 // var host = 'https://cjt9xe52.qcloud.la';
 // var host = 'https://62894912.qcloud.la';
-// var host = 'https://naivenan.cn';
-var host = 'http://localhost:8080';
+var host = 'https://naivenan.cn';
 
 var config = {
 
