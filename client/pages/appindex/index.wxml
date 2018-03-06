@@ -24,7 +24,7 @@
 
     <view class="weui-panel__hd">
       <text class='title'>警报提醒</text>
-      <button class='weui-btn mini-btn' type='warn' bindtap='refresh' size="mini">关闭</button>
+      <button class='weui-btn mini-btn' type='warn' bindtap='refresh' size="mini">刷新</button>
     </view>
 
     <view wx:if="{{alertList.length>0}}" class="weui-panel__bd">

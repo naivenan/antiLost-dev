@@ -5,7 +5,8 @@
 // 此处主机域名修改成腾讯云解决方案分配的域名
 // var host = 'https://cjt9xe52.qcloud.la';
 // var host = 'https://62894912.qcloud.la';
-var host = 'https://naivenan.cn';
+// var host = 'https://naivenan.cn';
+var host = 'http://localhost:8080';
 
 var config = {
 
@@ -27,11 +28,11 @@ var config = {
 
     hello: `${host}/weapp/hello`,
 
-    wxlogin: `${host}/user/wxlogin`,
+    wxlogin: `${host}/wx/user/wxlogin`,
 
-    userlogin: `${host}/user/login`,
+    userlogin: `${host}/wx/user/login`,
 
-    register: `${host}/user/register`,
+    register: `${host}/wx/user/register`,
 
     olderlist: `${host}/older/list`,
 
@@ -46,15 +47,15 @@ var config = {
 
     deleteolder: `${host}/older/delete`,
 
-    userUpdate: `${host}/user/update`,
+    userUpdate: `${host}/wx/user/update`,
 
     location: `${host}/location`,
 
-    code2session: `${host}/weixin/code2session`,
+    code2session: `${host}/wx/code2session`,
     
   },
 
-  nodeService: {
+  nodeservice: {
     host,
 
     // 登录地址，用于建立会话

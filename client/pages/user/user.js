@@ -107,7 +107,9 @@ Page({
     wx.request({
       url: config.service.userUpdate,
       data: {
-        user: user
+        id: user.id,
+        mphone: user.mphone,
+        birthday: user.birthday
       },
       success: res => {
         console.log(res);

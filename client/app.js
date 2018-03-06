@@ -7,7 +7,7 @@ App({
     var that = this;
     qcloud.setLoginUrl(config.service.loginUrl)
     wx.getSystemInfo({
-      success: function(res) {
+      success: function (res) {
         console.log('wx.getSystemInfo:');
         console.log(res);
         that.globalData.system = res.system.split(' ')[0];
@@ -43,6 +43,8 @@ App({
   globalData: {
     userinfo: {},
     olderList: [],
-    alertList: [],
+    alertList: []
   }
 })
+
+
