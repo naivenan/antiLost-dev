@@ -1,5 +1,6 @@
 // pages/user/edit/wx.js
 var app = getApp();
+var config = require('../../../config');
 
 Page({
 
@@ -21,13 +22,17 @@ Page({
     })
   },
   getToken: function () {
-    var tk = Math.round(Math.random() * 1000000);
-    this.setData({
-      token: tk
+    var that = this;
+    wx.request({
+      url: config.service.getModifyMobileCode,
+      data: {
+        mobile: that.data.inputValue
+      }
     })
-  },
-  back: function () {
-    this.done();
+    // var tk = Math.round(Math.random() * 1000000);
+    // this.setData({
+    //   token: tk
+    // })
   },
   done: function () {
     var that = this;
@@ -36,7 +41,7 @@ Page({
     var user = parent.data.user;
     user.mphone = that.data.inputValue;
     app.globalData.userinfo = user;
-    parent.update(user);
+    parent.updateMobile(user,that.data.token);
     wx.navigateBack({
       delta: 1
     })

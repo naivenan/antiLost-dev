@@ -35,7 +35,8 @@ Page({
   },
   f: function() {
     var that = this;
-    var result = this.confirm(this.data.user, this.data.pswd, this.data.tel, this.data.token);
+    var result = this.confirm(
+      this.data.user, this.data.pswd, this.data.tel, this.data.token);
     if (result) {
       wx.request({
         url: config.service.register,
@@ -111,10 +112,17 @@ Page({
     })
   },
   getToken: function () {
-    var tk = Math.round(Math.random() * 1000000);
-    this.setData({
-      token: tk
+    var that = this;
+    wx.request({
+      url: config.service.getRegCode,
+      data: {
+        mobile: that.data.tel
+      }
     })
+    // var tk = Math.round(Math.random() * 1000000);
+    // this.setData({
+    //   token: tk
+    // })
   },
   /**
    * 生命周期函数--监听页面加载

@@ -83,7 +83,10 @@ Page({
             console.log('response:');
             console.log(response)
             var user = that.data.user;
-            user.imgUrl = response.data.imgUrl;
+            // 微信nodejs后端实现
+            // user.imgUrl = response.data.imgUrl;
+            // Java后端实现
+            user.imgUrl = response.data;
             app.globalData.userinfo = user;
             that.setData({
               user: user 
@@ -108,8 +111,8 @@ Page({
       url: config.service.userUpdate,
       data: {
         id: user.id,
-        mphone: user.mphone,
-        birthday: user.birthday
+        birthday: user.birthday,
+        imgUrl: user.imgUrl
       },
       success: res => {
         console.log(res);
@@ -120,7 +123,22 @@ Page({
     })
   },
 
-
+  updateMobile: function (user,token) {
+    wx.request({
+      url: config.service.userUpdateMobile,
+      data: {
+        id: user.id,
+        mphone: user.mphone,
+        token: token
+      },
+      success: res => {
+        console.log(res);
+      },
+      fail: res => {
+        util.showModel('设置失败', '请重新设置');
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
