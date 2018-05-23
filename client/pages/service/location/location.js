@@ -116,6 +116,9 @@ Page({
         var points = [];
         if (data.paths && data.paths[0] && data.paths[0].steps) {
           var steps = data.paths[0].steps;
+          that.setData({
+            steps: steps
+          });
           for (var i = 0; i < steps.length; i++) {
             var poLen = steps[i].polyline.split(';');
             for (var j = 0; j < poLen.length; j++) {
@@ -170,18 +173,19 @@ Page({
     var param = {
       origin: that.data.origin,
       destination: that.data.destination,
+      steps: that.data.steps
     }
     //设置点击图片效果
     that.setData({
-      navigateImag: "../../images/ios7-navigate-click.png"
+      navigateImag: "../../../images/ios7-navigate-click.png"
     });
     //修改点击状态
     setTimeout(function () {
       that.setData({
-        navigateImag: "../../images/ios7-navigate.png"
+        navigateImag: "../../../images/ios7-navigate.png"
       });
       wx.navigateTo({
-        url: '../location-detail/location?param=' + JSON.stringify(param)
+        url: '../../location-detail/location?param=' + JSON.stringify(param)
       })
     }, 200);
   }

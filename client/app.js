@@ -1,6 +1,7 @@
 //app.js
 var qcloud = require('./vendor/wafer2-client-sdk/index')
 var config = require('./config')
+var util = require('./utils/util.js')
 
 App({
   onLaunch: function () {
@@ -13,6 +14,17 @@ App({
         that.globalData.system = res.system.split(' ')[0];
       },
     })
+    // qcloud.login({
+    //   success(result) {
+    //     util.showSuccess('登录成功');
+    //     console.log('登录成功', result);
+    //   },
+
+    //   fail(error) {
+    //     utilshowModel('登录失败', error);
+    //     console.log('登录失败', error);
+    //   }
+    // });
     // wx.login({
     //   success: function (res) {
     //     if (res.code) {

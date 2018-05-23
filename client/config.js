@@ -6,8 +6,10 @@
 // var host = 'https://cjt9xe52.qcloud.la';
 // var host = 'https://62894912.qcloud.la';
 // var host = 'https://naivenan.cn';
-var host = 'http://localhost:8080';
+// var host = 'http://localhost:8080/mzzn';
+var host = 'http://116.62.240.184/mzzn';
 var server = 'http://116.62.240.184/mzzn';
+
 
 var config = {
 
@@ -17,7 +19,7 @@ var config = {
 
     // 上传图片接口
     // Java
-    uploadUrl: `${server}/file/upload`,
+    uploadUrl: `${host}/file/upload`,
 
     wxlogin: `${host}/wx/user/wxlogin`,
 
